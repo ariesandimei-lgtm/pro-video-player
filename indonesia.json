@@ -1,0 +1,8 @@
+{
+"language":"id-ID",
+"segments":[
+{"id":1,"start":0.5,"end":3.5,"text":"Halo, selamat datang di video ini."},
+{"id":2,"start":4,"end":7,"text":"Hari ini kita akan mencoba subtitle pintar."},
+{"id":3,"start":7.5,"end":11,"text":"Subtitle akan mengikuti waktu video."}
+]
+}
