@@ -1,1 +1,15 @@
-
+{
+  "language": "id-ID",
+  "segments": [
+    {
+      "start": 0.5,
+      "end": 3.5,
+      "text": "Halo, selamat datang di video ini."
+    },
+    {
+      "start": 4,
+      "end": 7,
+      "text": "Hari ini kita akan mencoba subtitle pintar."
+    }
+  ]
+}
