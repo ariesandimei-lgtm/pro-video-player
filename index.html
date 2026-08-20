@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PRO Video Player</title>
+
+    <link
+        rel="stylesheet"
+        href="css/player.css"
+    >
+</head>
+
+<body>
+
+    <main class="app">
+
+        <h1 class="app-title">
+            PRO VIDEO PLAYER
+        </h1>
+
+        <p class="app-subtitle">
+            Smart Indonesian Subtitle Engine
+        </p>
+
+        <section class="player-wrapper">
+
+            <video
+                id="videoPlayer"
+                controls
+                playsinline
+                preload="metadata"
+            >
+
+                <source
+                    src="videos/sample.mp4"
+                    type="video/mp4"
+                >
+
+                Browser Anda tidak mendukung video HTML5.
+
+            </video>
+
+            <div
+                id="subtitleContainer"
+                class="subtitle-container"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+        <div class="status-panel">
+
+            <span>
+                Subtitle:
+                <strong id="subtitleStatus">
+                    Memuat...
+                </strong>
+            </span>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/subtitle-engine.js"></script>
+    <script src="js/player.js"></script>
+
+</body>
+
+</html>
