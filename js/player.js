@@ -26,10 +26,15 @@ document.addEventListener(
             );
 
 
-        const loaded =
-            await subtitleEngine.load(
-                "subtitles/indonesia.json"
-            );
+const loaded =
+    await subtitleEngine.load(
+        "./subtitles/indonesia.json"
+    );
+
+console.log(
+    "Subtitle loaded:",
+    loaded
+);
 
 
         if (loaded) {
