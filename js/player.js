@@ -171,3 +171,52 @@ function fullscreenVideo(){
     }
 
 }
+const video =
+document.getElementById(
+    "videoPlayer"
+);
+
+
+const progressBar =
+document.getElementById(
+    "progressBar"
+);
+
+
+
+video.addEventListener(
+    "timeupdate",
+    ()=>{
+
+
+        if(video.duration){
+
+            progressBar.value =
+            (video.currentTime /
+            video.duration) * 100;
+
+        }
+
+
+    }
+);
+
+
+
+progressBar.addEventListener(
+    "input",
+    ()=>{
+
+
+        if(video.duration){
+
+            video.currentTime =
+            (progressBar.value / 100)
+            *
+            video.duration;
+
+        }
+
+
+    }
+);
