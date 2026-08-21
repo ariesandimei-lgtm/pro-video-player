@@ -141,6 +141,37 @@ segment.text;
 
 
 
+let html = "";
+
+
+segment.words.forEach(word => {
+
+
+    const active =
+        currentTime >= word.start &&
+        currentTime <= word.end;
+
+
+    if(active){
+
+        html +=
+        `<span class="active-word">
+        ${word.text}
+        </span> `;
+
+    }
+
+    else {
+
+        html +=
+        `${word.text} `;
+
+    }
+
+
+});
+
+
 const formatted =
     this.segmenter.formatSegment(
         segment
@@ -148,7 +179,11 @@ const formatted =
 
 
 this.container.innerHTML =
-    formatted.displayText;
+    formatted.displayText
+    ?
+    html
+    :
+    html;
 
 
 
