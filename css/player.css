@@ -82,3 +82,8 @@ word-wrap: break-word;
     flex:1;
 
 }
+.player-controls input[type="range"]{
+
+    cursor:pointer;
+
+}
