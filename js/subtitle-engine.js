@@ -11,7 +11,8 @@ constructor(video, container){
     this.enabled = true;
 
     this.delay = 0;
-
+this.segmenter =
+    new SubtitleSegmenter();
 }
 
 
