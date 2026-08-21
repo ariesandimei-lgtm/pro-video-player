@@ -72,8 +72,8 @@ class SubtitleEngine {
         }
 
 
-        const currentTime =
-            this.video.currentTime;
+const currentTime =
+    this.video.currentTime + this.delay;
 
 
 
