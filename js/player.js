@@ -148,9 +148,28 @@ function toggleMute(){
         "videoPlayer"
     );
 
+    const volumeControl =
+    document.getElementById(
+        "volumeControl"
+    );
+
 
     video.muted =
     !video.muted;
+
+
+    if(video.muted){
+
+        volumeControl.value = 0;
+
+    }
+
+    else{
+
+        volumeControl.value =
+        video.volume * 100;
+
+    }
 
 }
 
