@@ -1,230 +1,180 @@
 class SubtitleEngine {
 
+    constructor(video, container){
 
-constructor(video, container){
+        this.video = video;
+        this.container = container;
 
-    this.video = video;
-    this.container = container;
+        this.segments = [];
 
-    this.segments = [];
+        this.enabled = true;
 
-    this.enabled = true;
-
-    this.delay = 0;
-this.segmenter =
-    new SubtitleSegmenter();
-}
-
-
-
-async load(url){
-
-    try{
-
-        const response =
-            await fetch(url);
-
-
-        const data =
-            await response.json();
-
-
-        this.segments =
-            data.segments;
-
-
-        console.log(
-            "Word subtitle loaded",
-            this.segments
-        );
-
-
-        return true;
-
-
-    }catch(error){
-
-        console.error(error);
-
-        return false;
+        this.delay = 0;
 
     }
 
-}
+
+    async load(url){
+
+        try{
+
+            const response =
+                await fetch(url);
 
 
-
-update(){
-
-
-if(!this.enabled){
-
-    this.container.innerHTML="";
-
-    return;
-
-}
+            const data =
+                await response.json();
 
 
-
-const currentTime =
-    this.video.currentTime +
-    this.delay;
+            this.segments =
+                data.segments;
 
 
-
-const segment =
-    this.segments.find(
-        item =>
-        currentTime >= item.start &&
-        currentTime <= item.end
-    );
+            console.log(
+                "Subtitle loaded:",
+                this.segments
+            );
 
 
-
-if(!segment){
-
-    this.container.innerHTML="";
-
-    return;
-
-}
+            return true;
 
 
+        } catch(error){
 
-let html="";
+            console.error(error);
 
+            return false;
 
-
-if(segment.words){
-
-
-segment.words.forEach(word=>{
-
-
-let active =
-currentTime >= word.start &&
-currentTime <= word.end;
-
-
-
-if(active){
-
-html +=
-`<span class="active-word">
-${word.text}
-</span> `;
-
-}
-
-else{
-
-html +=
-`${word.text} `;
-
-}
-
-
-});
-
-
-}
-
-else{
-
-
-html =
-segment.text;
-
-
-}
-
-
-
-let html = "";
-
-
-segment.words.forEach(word => {
-
-
-    const active =
-        currentTime >= word.start &&
-        currentTime <= word.end;
-
-
-    if(active){
-
-        html +=
-        `<span class="active-word">
-        ${word.text}
-        </span> `;
-
-    }
-
-    else {
-
-        html +=
-        `${word.text} `;
+        }
 
     }
 
 
-});
+
+    update(){
 
 
-const formatted =
-    this.segmenter.formatSegment(
-        segment
-    );
+        if(!this.enabled){
 
+            this.container.innerHTML = "";
 
-this.container.innerHTML =
-    formatted.displayText
-    ?
-    html
-    :
-    html;
+            return;
+
+        }
 
 
 
-}
+        const currentTime =
+            this.video.currentTime +
+            this.delay;
 
 
 
-start(){
+        const segment =
+            this.segments.find(item =>
 
+                currentTime >= item.start &&
+                currentTime <= item.end
 
-const loop=()=>{
-
-this.update();
-
-requestAnimationFrame(loop);
-
-};
-
-
-loop();
-
-
-}
+            );
 
 
 
-toggle(){
+        if(!segment){
 
-this.enabled =
-!this.enabled;
+            this.container.innerHTML = "";
 
-}
+            return;
+
+        }
 
 
 
-setDelay(value){
+        let html = "";
 
-this.delay=value;
 
-}
 
+        if(segment.words){
+
+
+            segment.words.forEach(word => {
+
+
+                const active =
+                    currentTime >= word.start &&
+                    currentTime <= word.end;
+
+
+
+                if(active){
+
+                    html +=
+                    `<span class="active-word">${word.text}</span> `;
+
+                }
+
+                else{
+
+                    html +=
+                    `${word.text} `;
+
+                }
+
+
+            });
+
+
+        }
+
+        else{
+
+            html =
+            segment.text;
+
+        }
+
+
+
+        this.container.innerHTML =
+            html;
+
+
+    }
+
+
+
+    start(){
+
+        const loop = () => {
+
+            this.update();
+
+            requestAnimationFrame(loop);
+
+        };
+
+
+        loop();
+
+    }
+
+
+
+    toggle(){
+
+        this.enabled =
+            !this.enabled;
+
+    }
+
+
+
+    setDelay(value){
+
+        this.delay =
+            value;
+
+    }
 
 
 }
