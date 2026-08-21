@@ -1,165 +1,188 @@
 class SubtitleEngine {
 
-    constructor(video, container) {
 
-        this.video = video;
-        this.container = container;
+constructor(video, container){
 
-        this.segments = [];
+    this.video = video;
+    this.container = container;
 
-        this.enabled = true;
-this.delay = 0;
-    }
+    this.segments = [];
 
+    this.enabled = true;
 
-    async load(url) {
+    this.delay = 0;
 
-        try {
-
-            const response = await fetch(url);
+}
 
 
-            if (!response.ok) {
 
-                throw new Error(
-                    "Subtitle file tidak ditemukan"
-                );
+async load(url){
 
-            }
+    try{
 
-
-            const data = await response.json();
+        const response =
+            await fetch(url);
 
 
-            this.segments = data.segments;
+        const data =
+            await response.json();
 
 
-            console.log(
-                "Subtitle berhasil dimuat:",
-                this.segments
-            );
+        this.segments =
+            data.segments;
 
 
-            return true;
+        console.log(
+            "Word subtitle loaded",
+            this.segments
+        );
 
 
-        } catch (error) {
+        return true;
 
 
-            console.error(
-                "Gagal memuat subtitle:",
-                error
-            );
+    }catch(error){
 
+        console.error(error);
 
-            return false;
-
-        }
+        return false;
 
     }
 
+}
 
 
-    update() {
+
+update(){
 
 
-        if (!this.enabled) {
+if(!this.enabled){
 
-            this.container.textContent = "";
+    this.container.innerHTML="";
 
-            return;
+    return;
 
-        }
+}
+
 
 
 const currentTime =
-    this.video.currentTime + this.delay;
+    this.video.currentTime +
+    this.delay;
 
 
 
-        const activeSubtitle =
-            this.segments.find(
-                segment =>
-
-                currentTime >= segment.start &&
-                currentTime <= segment.end
-
-            );
+const segment =
+    this.segments.find(
+        item =>
+        currentTime >= item.start &&
+        currentTime <= item.end
+    );
 
 
 
-        if (activeSubtitle) {
+if(!segment){
 
+    this.container.innerHTML="";
 
-            this.container.textContent =
-                activeSubtitle.text;
-
-
-        } else {
-
-
-            this.container.textContent =
-                "";
-
-        }
-
-
-    }
-
-
-
-    start() {
-
-
-        const updateLoop = () => {
-
-
-            this.update();
-
-
-            requestAnimationFrame(
-                updateLoop
-            );
-
-
-        };
-
-
-        updateLoop();
-
-
-    }
-
-
-
-    enable() {
-
-        this.enabled = true;
-
-    }
-
-
-
-    disable() {
-
-        this.enabled = false;
-
-        this.container.textContent = "";
-
-    }
-
-
-
-    toggle() {
-
-        this.enabled =
-            !this.enabled;
-
-    }
-setDelay(value){
-
-    this.delay = value;
+    return;
 
 }
+
+
+
+let html="";
+
+
+
+if(segment.words){
+
+
+segment.words.forEach(word=>{
+
+
+let active =
+currentTime >= word.start &&
+currentTime <= word.end;
+
+
+
+if(active){
+
+html +=
+`<span class="active-word">
+${word.text}
+</span> `;
+
+}
+
+else{
+
+html +=
+`${word.text} `;
+
+}
+
+
+});
+
+
+}
+
+else{
+
+
+html =
+segment.text;
+
+
+}
+
+
+
+this.container.innerHTML =
+html;
+
+
+
+}
+
+
+
+start(){
+
+
+const loop=()=>{
+
+this.update();
+
+requestAnimationFrame(loop);
+
+};
+
+
+loop();
+
+
+}
+
+
+
+toggle(){
+
+this.enabled =
+!this.enabled;
+
+}
+
+
+
+setDelay(value){
+
+this.delay=value;
+
+}
+
+
 
 }
