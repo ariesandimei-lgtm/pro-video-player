@@ -214,40 +214,30 @@ video {
 }
 
 
-
 /* =========================
-   FULLSCREEN MODE
+   FULLSCREEN FIX ONLY
 ========================= */
 
 
 .player-wrapper:fullscreen {
 
     width:100vw;
-
     height:100vh;
 
     background:black;
 
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
+    position:relative;
 
 }
 
 
-
-/* VIDEO FULLSCREEN */
-
+/* VIDEO SAAT FULLSCREEN */
 
 .player-wrapper:fullscreen video {
 
-    width:100vw;
+    width:100%;
 
-    height:100vh;
+    height:100%;
 
     object-fit:contain;
 
@@ -255,80 +245,33 @@ video {
 
 
 
-/* CONTROL MASUK FULLSCREEN */
-
-
-.player-wrapper:fullscreen .player-controls,
-.player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls {
-
-
-    position:absolute;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:100;
-
-
-}
-
-
-
-/* POSISI CONTROL */
-
-
-.player-wrapper:fullscreen .player-controls {
-
-    bottom:20px;
-
-}
-
-
-
-.player-wrapper:fullscreen .controls {
-
-    bottom:70px;
-
-}
-
-
-
-.player-wrapper:fullscreen .subtitle-controls {
-
-    bottom:120px;
-
-}
-
-
-
-/* SUBTITLE FULLSCREEN */
-
+/* SUBTITLE TETAP DI VIDEO */
 
 .player-wrapper:fullscreen #subtitleContainer {
 
-
     position:absolute;
 
-    bottom:170px;
+    bottom:80px;
 
     left:10%;
 
     width:80%;
 
-    font-size:32px;
-
-    z-index:200;
-
+    z-index:999;
 
 }
 
 
 
-/* =========================
-   MOBILE
-========================= */
+/* SEMBUNYIKAN TOMBOL LUAR SAAT FULLSCREEN */
+
+.player-wrapper:fullscreen .controls,
+.player-wrapper:fullscreen .subtitle-controls,
+.player-wrapper:fullscreen .player-controls {
+
+    z-index:1000;
+
+}
 
 
 @media(max-width:600px){
