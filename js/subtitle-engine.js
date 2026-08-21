@@ -1,8 +1,10 @@
 class SubtitleEngine {
 
+
     constructor(video, container){
 
         this.video = video;
+
         this.container = container;
 
         this.segments = [];
@@ -10,25 +12,29 @@ class SubtitleEngine {
         this.enabled = true;
 
         this.delay = 0;
-this.layout =
-    new SubtitleLayout();
+
     }
+
 
 
     async load(url){
 
         try{
 
+
             const response =
                 await fetch(url);
+
 
 
             const data =
                 await response.json();
 
 
+
             this.segments =
                 data.segments;
+
 
 
             console.log(
@@ -37,18 +43,27 @@ this.layout =
             );
 
 
+
             return true;
+
 
 
         } catch(error){
 
-            console.error(error);
+
+            console.error(
+                "Subtitle error:",
+                error
+            );
+
 
             return false;
+
 
         }
 
     }
+
 
 
 
@@ -68,6 +83,7 @@ this.layout =
         const currentTime =
             this.video.currentTime +
             this.delay;
+
 
 
 
@@ -91,71 +107,120 @@ this.layout =
 
 
 
+
         let wordsHTML = "";
 
-segment.words.forEach(word => {
 
 
-    const active =
-        currentTime >= word.start &&
-        currentTime <= word.end;
+        if(segment.words){
 
 
-    if(active){
+            segment.words.forEach(word => {
 
-        wordsHTML +=
-        `<span class="active-word">${word.text}</span> `;
+
+
+                const active =
+                    currentTime >= word.start &&
+                    currentTime <= word.end;
+
+
+
+                if(active){
+
+
+                    wordsHTML +=
+                    `<span class="active-word">${word.text}</span> `;
+
+
+                }
+
+                else{
+
+
+                    wordsHTML +=
+                    `${word.text} `;
+
+
+                }
+
+
+            });
+
+
+
+        }
+
+        else{
+
+
+            wordsHTML =
+            segment.text;
+
+
+        }
+
+
+
+
+        this.container.innerHTML =
+            wordsHTML;
+
 
     }
 
-    else{
 
-        wordsHTML +=
-        `${word.text} `;
-
-    }
-
-});
-
-
-this.container.innerHTML =
-    wordsHTML;
-
-
-    }
 
 
 
     start(){
 
+
         const loop = () => {
+
 
             this.update();
 
+
             requestAnimationFrame(loop);
+
 
         };
 
 
         loop();
 
+
     }
+
 
 
 
     toggle(){
 
+
         this.enabled =
             !this.enabled;
+
+
+        if(!this.enabled){
+
+            this.container.innerHTML="";
+
+        }
+
 
     }
 
 
 
+
+
     setDelay(value){
+
 
         this.delay =
             value;
+
 
     }
 
