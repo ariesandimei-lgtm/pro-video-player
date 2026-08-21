@@ -8,7 +8,7 @@ class SubtitleEngine {
         this.segments = [];
 
         this.enabled = true;
-
+this.delay = 0;
     }
 
 
@@ -156,6 +156,10 @@ const currentTime =
             !this.enabled;
 
     }
+setDelay(value){
 
+    this.delay = value;
+
+}
 
 }
