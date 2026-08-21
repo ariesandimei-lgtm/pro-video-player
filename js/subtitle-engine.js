@@ -10,7 +10,8 @@ class SubtitleEngine {
         this.enabled = true;
 
         this.delay = 0;
-
+this.layout =
+    new SubtitleLayout();
     }
 
 
