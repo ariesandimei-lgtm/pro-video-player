@@ -177,15 +177,21 @@ function toggleMute(){
 
 function fullscreenVideo(){
 
-    const video =
-    document.getElementById(
-        "videoPlayer"
-    );
+    const player =
+        document.querySelector(
+            ".player-wrapper"
+        );
 
 
-    if(video.requestFullscreen){
+    if(player.requestFullscreen){
 
-        video.requestFullscreen();
+        player.requestFullscreen();
+
+    }
+
+    else if(player.webkitRequestFullscreen){
+
+        player.webkitRequestFullscreen();
 
     }
 
