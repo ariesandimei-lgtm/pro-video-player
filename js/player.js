@@ -117,3 +117,57 @@ function changeSpeed(speed){
     video.playbackRate = speed;
 
 }
+function togglePlay(){
+
+    const video =
+    document.getElementById(
+        "videoPlayer"
+    );
+
+
+    if(video.paused){
+
+        video.play();
+
+    }
+
+    else{
+
+        video.pause();
+
+    }
+
+}
+
+
+
+function toggleMute(){
+
+    const video =
+    document.getElementById(
+        "videoPlayer"
+    );
+
+
+    video.muted =
+    !video.muted;
+
+}
+
+
+
+function fullscreenVideo(){
+
+    const video =
+    document.getElementById(
+        "videoPlayer"
+    );
+
+
+    if(video.requestFullscreen){
+
+        video.requestFullscreen();
+
+    }
+
+}
