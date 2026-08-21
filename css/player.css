@@ -157,3 +157,34 @@ word-wrap: break-word;
 
 
 }
+.player-wrapper:fullscreen {
+
+    width:100vw;
+
+    height:100vh;
+
+    background:black;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+
+
+.player-wrapper:fullscreen video {
+
+    max-height:90vh;
+
+}
+
+
+
+.player-wrapper:fullscreen #subtitleContainer {
+
+    bottom:100px;
+
+}
