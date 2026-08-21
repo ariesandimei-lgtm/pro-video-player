@@ -272,12 +272,4 @@ volumeControl.addEventListener(
         }
 
     }
-);
-
-
-        video.volume =
-        volumeControl.value / 100;
-
-
-    }
-);
+);    
