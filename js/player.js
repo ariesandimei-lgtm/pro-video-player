@@ -249,6 +249,25 @@ volumeControl.addEventListener(
     "input",
     ()=>{
 
+        video.volume =
+        volumeControl.value / 100;
+
+
+        if(video.volume === 0){
+
+            video.muted = true;
+
+        }
+
+        else{
+
+            video.muted = false;
+
+        }
+
+    }
+);
+
 
         video.volume =
         volumeControl.value / 100;
