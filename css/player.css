@@ -49,3 +49,36 @@ word-wrap: break-word;
 }
 
 }
+.player-controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+
+.player-controls button{
+
+    background:#222;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    cursor:pointer;
+
+}
+
+
+.player-controls input{
+
+    flex:1;
+
+}
