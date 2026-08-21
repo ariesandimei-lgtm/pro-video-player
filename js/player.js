@@ -219,16 +219,46 @@ window.subtitleEngine.setDelay(value);
 
 function fullscreenVideo(){
 
-const player =
-document.querySelector(
-".player-wrapper"
-);
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
 
 
-if(player.requestFullscreen){
+    if (!document.fullscreenElement) {
 
-player.requestFullscreen();
 
-}
+        if(player.requestFullscreen){
+
+            player.requestFullscreen();
+
+        }
+
+        else if(player.webkitRequestFullscreen){
+
+            player.webkitRequestFullscreen();
+
+        }
+
+
+    } 
+    
+    else {
+
+
+        if(document.exitFullscreen){
+
+            document.exitFullscreen();
+
+        }
+
+        else if(document.webkitExitFullscreen){
+
+            document.webkitExitFullscreen();
+
+        }
+
+
+    }
 
 }
