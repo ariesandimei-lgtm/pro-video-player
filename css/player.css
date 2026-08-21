@@ -194,6 +194,14 @@ word-wrap: break-word;
 
     background:black;
 
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
 }
 
 
@@ -204,5 +212,17 @@ word-wrap: break-word;
     height:100%;
 
     object-fit:contain;
+
+}
+
+
+.player-wrapper:fullscreen .player-controls,
+.player-wrapper:fullscreen .subtitle-controls {
+
+    position:absolute;
+
+    bottom:20px;
+
+    z-index:10;
 
 }
