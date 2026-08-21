@@ -104,8 +104,7 @@ function subtitleDelay(value){
 
     subtitleDelayValue = value;
 
-    subtitleEngine.delay =
-        value;
+    subtitleEngine.setDelay(value);
 
 }
 function changeSpeed(speed){
