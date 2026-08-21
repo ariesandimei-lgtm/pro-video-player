@@ -91,53 +91,35 @@ this.layout =
 
 
 
-        let html = "";
+        let wordsHTML = "";
+
+segment.words.forEach(word => {
 
 
-
-        if(segment.words){
-
-
-            segment.words.forEach(word => {
+    const active =
+        currentTime >= word.start &&
+        currentTime <= word.end;
 
 
-                const active =
-                    currentTime >= word.start &&
-                    currentTime <= word.end;
+    if(active){
+
+        wordsHTML +=
+        `<span class="active-word">${word.text}</span> `;
+
+    }
+
+    else{
+
+        wordsHTML +=
+        `${word.text} `;
+
+    }
+
+});
 
 
-
-                if(active){
-
-                    html +=
-                    `<span class="active-word">${word.text}</span> `;
-
-                }
-
-                else{
-
-                    html +=
-                    `${word.text} `;
-
-                }
-
-
-            });
-
-
-        }
-
-        else{
-
-            html =
-            segment.text;
-
-        }
-
-
-
-        this.container.innerHTML =
-            html;
+this.container.innerHTML =
+    wordsHTML;
 
 
     }
