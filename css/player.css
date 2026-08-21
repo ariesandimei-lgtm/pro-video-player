@@ -1,7 +1,3 @@
-/* =========================
-   GLOBAL
-========================= */
-
 body {
 
     margin:0;
@@ -13,6 +9,7 @@ body {
     font-family:Arial, sans-serif;
 
 }
+
 
 
 .app {
@@ -27,10 +24,6 @@ body {
 
 }
 
-
-/* =========================
-   VIDEO PLAYER
-========================= */
 
 
 .player-wrapper {
@@ -55,9 +48,9 @@ video {
 
 
 
-/* =========================
-   SUBTITLE
-========================= */
+/* =====================
+SUBTITLE
+===================== */
 
 
 #subtitleContainer {
@@ -86,7 +79,7 @@ video {
 
     2px 2px 5px black;
 
-    z-index:50;
+    z-index:5;
 
 }
 
@@ -102,9 +95,9 @@ video {
 
 
 
-/* =========================
-   PLAYER CONTROL
-========================= */
+/* =====================
+CONTROL VIDEO
+===================== */
 
 
 .player-controls {
@@ -125,7 +118,6 @@ video {
 .controls button,
 .subtitle-controls button {
 
-
     background:#222;
 
     color:white;
@@ -140,11 +132,9 @@ video {
 
 
 
-.player-controls button:hover,
-.controls button:hover,
-.subtitle-controls button:hover {
+.player-controls input {
 
-    background:#444;
+    flex:1;
 
 }
 
@@ -152,18 +142,13 @@ video {
 
 .player-controls input[type="range"] {
 
-    flex:1;
-
     cursor:pointer;
 
 }
 
 
 
-/* =========================
-   SPEED CONTROL
-========================= */
-
+/* SPEED */
 
 .controls {
 
@@ -179,10 +164,7 @@ video {
 
 
 
-/* =========================
-   SUBTITLE CONTROL
-========================= */
-
+/* SUBTITLE BUTTON */
 
 .subtitle-controls {
 
@@ -200,28 +182,16 @@ video {
 
 
 
-/* =========================
-   STATUS
-========================= */
-
-
-.status-panel {
-
-    margin-top:15px;
-
-    text-align:center;
-
-}
-
-
-/* =========================
-   FULLSCREEN FIX ONLY
-========================= */
+/* =====================
+FULLSCREEN FIX
+JANGAN UBAH
+===================== */
 
 
 .player-wrapper:fullscreen {
 
     width:100vw;
+
     height:100vh;
 
     background:black;
@@ -231,13 +201,14 @@ video {
 }
 
 
-/* VIDEO SAAT FULLSCREEN */
+
+/* VIDEO FULLSCREEN */
 
 .player-wrapper:fullscreen video {
 
-    width:100%;
+    width:100vw;
 
-    height:100%;
+    height:100vh;
 
     object-fit:contain;
 
@@ -245,7 +216,8 @@ video {
 
 
 
-/* SUBTITLE TETAP DI VIDEO */
+/* SUBTITLE FULLSCREEN */
+
 
 .player-wrapper:fullscreen #subtitleContainer {
 
@@ -257,21 +229,43 @@ video {
 
     width:80%;
 
-    z-index:999;
+    z-index:50;
 
 }
 
 
 
-/* SEMBUNYIKAN TOMBOL LUAR SAAT FULLSCREEN */
+/* CONTROL TETAP AKTIF */
 
+
+.player-wrapper:fullscreen .player-controls,
 .player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls,
-.player-wrapper:fullscreen .player-controls {
+.player-wrapper:fullscreen .subtitle-controls {
 
-    z-index:1000;
+    position:relative;
+
+    z-index:100;
 
 }
+
+
+
+/* =====================
+STATUS
+===================== */
+
+
+.status-panel {
+
+    margin-top:15px;
+
+}
+
+
+
+/* =====================
+MOBILE
+===================== */
 
 
 @media(max-width:600px){
@@ -293,55 +287,25 @@ video {
 
     #subtitleContainer {
 
-
         font-size:20px;
 
         bottom:50px;
-
 
     }
 
 
     .player-controls {
 
-
         flex-wrap:wrap;
-
 
     }
 
 
-    .player-controls button,
-    .controls button,
-    .subtitle-controls button {
-
+    .player-controls button {
 
         padding:6px 10px;
 
-        font-size:12px;
-
-
     }
-
-
-}
-
-
-
-/* =========================
-   BROWSER FULLSCREEN FIX
-========================= */
-
-
-html:fullscreen,
-body:fullscreen {
-
-
-    width:100%;
-
-    height:100%;
-
-    overflow:hidden;
 
 
 }
