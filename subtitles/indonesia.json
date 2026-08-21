@@ -1,15 +1,39 @@
 {
   "language": "id-ID",
+  "version": "2.0",
   "segments": [
     {
-      "start": 0.5,
-      "end": 3.5,
-      "text": "Halo, selamat datang di video ini."
-    },
-    {
-      "start": 4,
-      "end": 7,
-      "text": "Hari ini kita akan mencoba subtitle pintar."
+      "id": 1,
+      "start": 1.00,
+      "end": 5.00,
+      "text": "Hari ini kita akan pergi.",
+      "words": [
+        {
+          "text": "Hari",
+          "start": 1.00,
+          "end": 1.50
+        },
+        {
+          "text": "ini",
+          "start": 1.50,
+          "end": 1.90
+        },
+        {
+          "text": "kita",
+          "start": 1.90,
+          "end": 2.30
+        },
+        {
+          "text": "akan",
+          "start": 2.30,
+          "end": 2.70
+        },
+        {
+          "text": "pergi",
+          "start": 2.70,
+          "end": 3.50
+        }
+      ]
     }
   ]
 }
