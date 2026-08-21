@@ -16,25 +16,26 @@ class SubtitleEngine {
 
         try {
 
-            const response =
-                await fetch(url);
+            const response = await fetch(url);
 
 
-const data = await response.json();
+            if (!response.ok) {
 
-console.log("DATA SUBTITLE:", data);
+                throw new Error(
+                    "Subtitle file tidak ditemukan"
+                );
+
+            }
 
 
-this.segments = data.segments;
+            const data = await response.json();
 
-console.log(
-    "JUMLAH SUBTITLE:",
-    this.segments.length
-);
+
+            this.segments = data.segments;
 
 
             console.log(
-                "Subtitle berhasil dimuat",
+                "Subtitle berhasil dimuat:",
                 this.segments
             );
 
@@ -42,11 +43,11 @@ console.log(
             return true;
 
 
-        } catch(error) {
+        } catch (error) {
 
 
             console.error(
-                "Subtitle gagal:",
+                "Gagal memuat subtitle:",
                 error
             );
 
@@ -62,7 +63,7 @@ console.log(
     update() {
 
 
-        if(!this.enabled){
+        if (!this.enabled) {
 
             this.container.textContent = "";
 
@@ -76,7 +77,7 @@ console.log(
 
 
 
-        const active =
+        const activeSubtitle =
             this.segments.find(
                 segment =>
 
@@ -87,11 +88,11 @@ console.log(
 
 
 
-        if(active){
+        if (activeSubtitle) {
 
 
             this.container.textContent =
-                active.text;
+                activeSubtitle.text;
 
 
         } else {
@@ -107,31 +108,52 @@ console.log(
 
 
 
-    start(){
+    start() {
 
 
-        const loop = () => {
+        const updateLoop = () => {
 
 
             this.update();
 
 
-            requestAnimationFrame(loop);
+            requestAnimationFrame(
+                updateLoop
+            );
 
 
         };
 
 
-        loop();
+        updateLoop();
 
 
     }
 
 
 
-    setEnabled(value){
+    enable() {
 
-        this.enabled = value;
+        this.enabled = true;
+
+    }
+
+
+
+    disable() {
+
+        this.enabled = false;
+
+        this.container.textContent = "";
+
+    }
+
+
+
+    toggle() {
+
+        this.enabled =
+            !this.enabled;
 
     }
 
