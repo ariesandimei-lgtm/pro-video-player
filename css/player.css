@@ -37,8 +37,10 @@ video {
 }
 .active-word {
 
-    color: cyan;
+    color: cyan !important;
 
     font-weight: bold;
+
+}
 
 }
