@@ -1,6 +1,11 @@
 let video;
+
 let progressBar;
+
 let volumeControl;
+
+let subtitleContainer;
+
 
 
 document.addEventListener(
@@ -14,10 +19,12 @@ document.getElementById(
 );
 
 
-const subtitleContainer =
+
+subtitleContainer =
 document.getElementById(
 "subtitleContainer"
 );
+
 
 
 const subtitleStatus =
@@ -44,8 +51,12 @@ await subtitleEngine.load(
 
 if(loaded){
 
+if(subtitleStatus){
+
 subtitleStatus.textContent =
 "Aktif";
+
+}
 
 
 subtitleEngine.start();
@@ -56,8 +67,12 @@ subtitleEngine.start();
 else{
 
 
+if(subtitleStatus){
+
 subtitleStatus.textContent =
 "Gagal";
+
+}
 
 
 }
@@ -83,6 +98,11 @@ document.getElementById(
 
 
 
+
+
+if(progressBar){
+
+
 video.addEventListener(
 "timeupdate",
 ()=>{
@@ -90,9 +110,11 @@ video.addEventListener(
 
 if(video.duration){
 
+
 progressBar.value =
 (video.currentTime /
-video.duration)*100;
+video.duration)
+*100;
 
 
 }
@@ -108,6 +130,9 @@ progressBar.addEventListener(
 ()=>{
 
 
+if(video.duration){
+
+
 video.currentTime =
 (progressBar.value/100)
 *
@@ -115,8 +140,20 @@ video.duration;
 
 
 }
+
+
+}
 );
 
+
+}
+
+
+
+
+
+
+if(volumeControl){
 
 
 volumeControl.addEventListener(
@@ -132,12 +169,22 @@ volumeControl.value/100;
 );
 
 
+}
+
+
 
 });
 
 
 
+
+
+
+
 function changeSpeed(speed){
+
+
+if(video){
 
 video.playbackRate =
 speed;
@@ -145,16 +192,36 @@ speed;
 }
 
 
+}
+
+
+
+
+
 
 function toggleSubtitle(){
+
+
+if(window.subtitleEngine){
 
 window.subtitleEngine.toggle();
 
 }
 
 
+}
+
+
+
+
+
+
 
 function togglePlay(){
+
+
+if(video){
+
 
 if(video.paused){
 
@@ -168,11 +235,23 @@ video.pause();
 
 }
 
+
+}
+
+
 }
 
 
 
+
+
+
+
+
 function toggleMute(){
+
+
+if(video){
 
 video.muted =
 !video.muted;
@@ -180,85 +259,105 @@ video.muted =
 }
 
 
+}
+
+
+
+
+
+
+
 
 function subtitleSize(size){
 
 
+if(!subtitleContainer){
+
+return;
+
+}
+
+
+
 if(size=="small"){
 
-subtitleContainer.style.fontSize="18px";
+subtitleContainer.style.fontSize=
+"18px";
 
 }
 
 
 if(size=="medium"){
 
-subtitleContainer.style.fontSize="28px";
+subtitleContainer.style.fontSize=
+"28px";
 
 }
 
 
 if(size=="large"){
 
-subtitleContainer.style.fontSize="38px";
+subtitleContainer.style.fontSize=
+"38px";
 
 }
 
 
 }
+
+
+
+
 
 
 
 function subtitleDelay(value){
+
+
+if(window.subtitleEngine){
 
 window.subtitleEngine.setDelay(value);
 
 }
 
 
+}
+
+
+
+
+
+
 
 function fullscreenVideo(){
 
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
+
+const player =
+document.querySelector(
+".player-wrapper"
+);
 
 
-    if (!document.fullscreenElement) {
+
+if(!document.fullscreenElement){
 
 
-        if(player.requestFullscreen){
+if(player.requestFullscreen){
 
-            player.requestFullscreen();
+player.requestFullscreen();
 
-        }
-
-        else if(player.webkitRequestFullscreen){
-
-            player.webkitRequestFullscreen();
-
-        }
+}
 
 
-    } 
-    
-    else {
+}
+
+else{
 
 
-        if(document.exitFullscreen){
-
-            document.exitFullscreen();
-
-        }
-
-        else if(document.webkitExitFullscreen){
-
-            document.webkitExitFullscreen();
-
-        }
+document.exitFullscreen();
 
 
-    }
+}
+
 
 }
