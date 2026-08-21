@@ -87,3 +87,8 @@ word-wrap: break-word;
     cursor:pointer;
 
 }
+.player-controls input[type="range"]{
+
+    height:5px;
+
+}
