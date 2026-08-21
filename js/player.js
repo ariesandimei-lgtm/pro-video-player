@@ -1,141 +1,172 @@
+let video;
+let progressBar;
+let volumeControl;
+
 
 document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        const video =
-            document.getElementById(
-                "videoPlayer"
-            );
-
-        const subtitleContainer =
-            document.getElementById(
-                "subtitleContainer"
-            );
-
-        const subtitleStatus =
-            document.getElementById(
-                "subtitleStatus"
-            );
+"DOMContentLoaded",
+async ()=>{
 
 
-        const subtitleEngine =
-            new SubtitleEngine(
-                video,
-                subtitleContainer
-            );
+video =
+document.getElementById(
+"videoPlayer"
+);
+
+
+const subtitleContainer =
+document.getElementById(
+"subtitleContainer"
+);
+
+
+const subtitleStatus =
+document.getElementById(
+"subtitleStatus"
+);
+
+
+
+const subtitleEngine =
+new SubtitleEngine(
+video,
+subtitleContainer
+);
+
 
 
 const loaded =
-    await subtitleEngine.load(
-        "./subtitles/indonesia.json"
-    );
-
-console.log(
-    "Subtitle loaded:",
-    loaded
+await subtitleEngine.load(
+"./subtitles/indonesia.json"
 );
 
 
-        if (loaded) {
 
-            subtitleStatus.textContent =
-                "Aktif";
+if(loaded){
 
-            subtitleEngine.start();
-
-        } else {
-
-            subtitleStatus.textContent =
-                "Gagal";
-
-        }
+subtitleStatus.textContent =
+"Aktif";
 
 
-        window.subtitleEngine =
-            subtitleEngine;
+subtitleEngine.start();
 
-    }
+
+}
+
+else{
+
+
+subtitleStatus.textContent =
+"Gagal";
+
+
+}
+
+
+
+window.subtitleEngine =
+subtitleEngine;
+
+
+
+progressBar =
+document.getElementById(
+"progressBar"
 );
-let subtitleDelayValue = 0;
+
+
+
+volumeControl =
+document.getElementById(
+"volumeControl"
+);
+
+
+
+video.addEventListener(
+"timeupdate",
+()=>{
+
+
+if(video.duration){
+
+progressBar.value =
+(video.currentTime /
+video.duration)*100;
+
+
+}
+
+
+}
+);
+
+
+
+progressBar.addEventListener(
+"input",
+()=>{
+
+
+video.currentTime =
+(progressBar.value/100)
+*
+video.duration;
+
+
+}
+);
+
+
+
+volumeControl.addEventListener(
+"input",
+()=>{
+
+
+video.volume =
+volumeControl.value/100;
+
+
+}
+);
+
+
+
+});
+
+
+
+function changeSpeed(speed){
+
+video.playbackRate =
+speed;
+
+}
+
 
 
 function toggleSubtitle(){
 
-    subtitleEngine.toggle();
+window.subtitleEngine.toggle();
 
 }
 
 
 
-function subtitleSize(size){
-
-    const subtitle =
-        document.getElementById(
-            "subtitleContainer"
-        );
-
-
-    if(size === "small"){
-
-        subtitle.style.fontSize="18px";
-
-    }
-
-
-    if(size === "medium"){
-
-        subtitle.style.fontSize="28px";
-
-    }
-
-
-    if(size === "large"){
-
-        subtitle.style.fontSize="38px";
-
-    }
-
-}
-
-
-
-function subtitleDelay(value){
-
-    subtitleDelayValue = value;
-
-    subtitleEngine.setDelay(value);
-
-}
-function changeSpeed(speed){
-
-    const video =
-        document.getElementById(
-            "videoPlayer"
-        );
-
-    video.playbackRate = speed;
-
-}
 function togglePlay(){
 
-    const video =
-    document.getElementById(
-        "videoPlayer"
-    );
+if(video.paused){
 
+video.play();
 
-    if(video.paused){
+}
 
-        video.play();
+else{
 
-    }
+video.pause();
 
-    else{
-
-        video.pause();
-
-    }
+}
 
 }
 
@@ -143,33 +174,44 @@ function togglePlay(){
 
 function toggleMute(){
 
-    const video =
-    document.getElementById(
-        "videoPlayer"
-    );
+video.muted =
+!video.muted;
 
-    const volumeControl =
-    document.getElementById(
-        "volumeControl"
-    );
+}
 
 
-    video.muted =
-    !video.muted;
+
+function subtitleSize(size){
 
 
-    if(video.muted){
+if(size=="small"){
 
-        volumeControl.value = 0;
+subtitleContainer.style.fontSize="18px";
 
-    }
+}
 
-    else{
 
-        volumeControl.value =
-        video.volume * 100;
+if(size=="medium"){
 
-    }
+subtitleContainer.style.fontSize="28px";
+
+}
+
+
+if(size=="large"){
+
+subtitleContainer.style.fontSize="38px";
+
+}
+
+
+}
+
+
+
+function subtitleDelay(value){
+
+window.subtitleEngine.setDelay(value);
 
 }
 
@@ -177,99 +219,16 @@ function toggleMute(){
 
 function fullscreenVideo(){
 
-    const player =
-        document.querySelector(
-            ".player-wrapper"
-        );
+const player =
+document.querySelector(
+".player-wrapper"
+);
 
 
-    if(player.requestFullscreen){
+if(player.requestFullscreen){
 
-        player.requestFullscreen();
-
-    }
-
-    else if(player.webkitRequestFullscreen){
-
-        player.webkitRequestFullscreen();
-
-    }
+player.requestFullscreen();
 
 }
-const video =
-document.getElementById(
-    "videoPlayer"
-);
 
-
-const progressBar =
-document.getElementById(
-    "progressBar"
-);
-
-
-
-video.addEventListener(
-    "timeupdate",
-    ()=>{
-
-
-        if(video.duration){
-
-            progressBar.value =
-            (video.currentTime /
-            video.duration) * 100;
-
-        }
-
-
-    }
-);
-
-
-
-progressBar.addEventListener(
-    "input",
-    ()=>{
-
-
-        if(video.duration){
-
-            video.currentTime =
-            (progressBar.value / 100)
-            *
-            video.duration;
-
-        }
-
-
-    }
-);
-const volumeControl =
-document.getElementById(
-    "volumeControl"
-);
-
-
-volumeControl.addEventListener(
-    "input",
-    ()=>{
-
-        video.volume =
-        volumeControl.value / 100;
-
-
-        if(video.volume === 0){
-
-            video.muted = true;
-
-        }
-
-        else{
-
-            video.muted = false;
-
-        }
-
-    }
-);    
+}
