@@ -57,3 +57,13 @@ console.log(
 
     }
 );
+function changeSpeed(speed){
+
+    const video =
+        document.getElementById(
+            "videoPlayer"
+        );
+
+    video.playbackRate = speed;
+
+}
