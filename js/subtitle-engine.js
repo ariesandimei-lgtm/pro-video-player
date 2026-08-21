@@ -141,8 +141,14 @@ segment.text;
 
 
 
+const formatted =
+    this.segmenter.formatSegment(
+        segment
+    );
+
+
 this.container.innerHTML =
-html;
+    formatted.displayText;
 
 
 
