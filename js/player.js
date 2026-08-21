@@ -57,6 +57,57 @@ console.log(
 
     }
 );
+let subtitleDelayValue = 0;
+
+
+function toggleSubtitle(){
+
+    subtitleEngine.toggle();
+
+}
+
+
+
+function subtitleSize(size){
+
+    const subtitle =
+        document.getElementById(
+            "subtitleContainer"
+        );
+
+
+    if(size === "small"){
+
+        subtitle.style.fontSize="18px";
+
+    }
+
+
+    if(size === "medium"){
+
+        subtitle.style.fontSize="28px";
+
+    }
+
+
+    if(size === "large"){
+
+        subtitle.style.fontSize="38px";
+
+    }
+
+}
+
+
+
+function subtitleDelay(value){
+
+    subtitleDelayValue = value;
+
+    subtitleEngine.delay =
+        value;
+
+}
 function changeSpeed(speed){
 
     const video =
