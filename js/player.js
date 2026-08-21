@@ -220,3 +220,20 @@ progressBar.addEventListener(
 
     }
 );
+const volumeControl =
+document.getElementById(
+    "volumeControl"
+);
+
+
+volumeControl.addEventListener(
+    "input",
+    ()=>{
+
+
+        video.volume =
+        volumeControl.value / 100;
+
+
+    }
+);
