@@ -1,9 +1,10 @@
-/* =========================
+/* ==========================
    PRO VIDEO PLAYER CSS
-   V3.4.2 STABLE
-========================= */
+   V3.4.5
+========================== */
 
 
+/* GLOBAL */
 
 body {
 
@@ -16,8 +17,6 @@ body {
     font-family:Arial, sans-serif;
 
 }
-
-
 
 
 
@@ -35,6 +34,9 @@ body {
 
 
 
+/* ==========================
+   PLAYER
+========================== */
 
 
 .player-wrapper {
@@ -45,13 +47,13 @@ body {
 
 
 
-
-
 video {
 
     width:100%;
 
     background:black;
+
+    display:block;
 
 }
 
@@ -59,9 +61,9 @@ video {
 
 
 
-/* =========================
+/* ==========================
    SUBTITLE
-========================= */
+========================== */
 
 
 #subtitleContainer {
@@ -80,11 +82,9 @@ video {
 
     font-weight:bold;
 
-    color:white;
-
     line-height:1.4;
 
-    word-wrap:break-word;
+    color:white;
 
     text-shadow:
 
@@ -110,9 +110,9 @@ video {
 
 
 
-/* =========================
-   PLAYER CONTROL
-========================= */
+/* ==========================
+   MAIN CONTROL
+========================== */
 
 
 .player-controls {
@@ -129,9 +129,8 @@ video {
 
 
 
-
-
 .player-controls button {
+
 
     background:#222;
 
@@ -143,9 +142,8 @@ video {
 
     cursor:pointer;
 
+
 }
-
-
 
 
 
@@ -159,21 +157,9 @@ video {
 
 
 
-.player-controls input[type="range"] {
-
-    cursor:pointer;
-
-}
-
-
-
-
-
-
-
-/* =========================
+/* ==========================
    SPEED CONTROL
-========================= */
+========================== */
 
 
 .controls {
@@ -187,8 +173,6 @@ video {
     margin-top:10px;
 
 }
-
-
 
 
 
@@ -213,14 +197,12 @@ video {
 
 
 
-
-/* =========================
+/* ==========================
    SUBTITLE CONTROL
-========================= */
+========================== */
 
 
 .subtitle-controls {
-
 
     display:flex;
 
@@ -234,8 +216,6 @@ video {
 
 
 }
-
-
 
 
 
@@ -260,18 +240,17 @@ video {
 
 
 
-
-/* =========================
-   FULLSCREEN MODE
-========================= */
+/* ==========================
+   FULLSCREEN VIDEO
+========================== */
 
 
 .player-wrapper:fullscreen {
 
 
-    width:100vw;
+    width:100vw !important;
 
-    height:100vh;
+    height:100vh !important;
 
     background:black;
 
@@ -281,9 +260,10 @@ video {
 
     justify-content:center;
 
+    overflow:hidden;
+
 
 }
-
 
 
 
@@ -291,11 +271,11 @@ video {
 .player-wrapper:fullscreen video {
 
 
-    width:100%;
+    width:100vw !important;
 
-    height:100%;
+    height:100vh !important;
 
-    object-fit:contain;
+    object-fit:cover !important;
 
 
 }
@@ -304,15 +284,21 @@ video {
 
 
 
-
-
-/* subtitle fullscreen */
+/* ==========================
+   FULLSCREEN SUBTITLE
+========================== */
 
 
 .player-wrapper:fullscreen #subtitleContainer {
 
 
-    bottom:100px;
+    position:absolute;
+
+    bottom:80px;
+
+    left:10%;
+
+    width:80%;
 
     z-index:100;
 
@@ -325,23 +311,27 @@ video {
 
 
 
-
-/* =========================
-   FULLSCREEN AUTO HIDE
-========================= */
-
+/* ==========================
+   FULLSCREEN CONTROL HIDE
+========================== */
 
 
-.player-wrapper:fullscreen .player-controls,
-.player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls {
+
+.player-wrapper:fullscreen.hide-control 
+.player-controls,
+
+.player-wrapper:fullscreen.hide-control 
+.controls,
+
+.player-wrapper:fullscreen.hide-control 
+.subtitle-controls {
 
 
     opacity:0;
 
     pointer-events:none;
 
-    transition:opacity 0.3s;
+    transition:0.3s;
 
 
 }
@@ -350,18 +340,29 @@ video {
 
 
 
-/* tampil kembali saat disentuh */
 
 
-.player-wrapper:fullscreen:hover .player-controls,
-.player-wrapper:fullscreen:hover .controls,
-.player-wrapper:fullscreen:hover .subtitle-controls {
+/* ==========================
+   FULLSCREEN CONTROL SHOW
+========================== */
+
+
+.player-wrapper:fullscreen.show-control 
+.player-controls,
+
+.player-wrapper:fullscreen.show-control 
+.controls,
+
+.player-wrapper:fullscreen.show-control 
+.subtitle-controls {
 
 
     opacity:1;
 
     pointer-events:auto;
 
+    transition:0.3s;
+
 
 }
 
@@ -371,215 +372,41 @@ video {
 
 
 
-
-/* =========================
+/* ==========================
    MOBILE
-========================= */
+========================== */
 
 
 @media(max-width:600px){
 
 
+    .app {
 
-h1 {
+        padding:15px;
 
-    font-size:24px;
+    }
 
-}
 
 
+    #subtitleContainer {
 
-#subtitleContainer {
 
+        font-size:20px;
 
-    font-size:20px;
+        bottom:50px;
 
-    bottom:50px;
 
+    }
 
-}
 
 
+    .player-controls {
 
-.player-controls {
 
+        flex-wrap:wrap;
 
-    flex-wrap:wrap;
 
+    }
 
-}
-
-
-
-.player-controls button {
-
-
-    padding:6px 10px;
-
-
-}
-
-
-}
-/* ==========================
-FULLSCREEN FINAL FIX
-========================== */
-
-
-.player-wrapper.fullscreen-active
-.player-controls,
-.player-wrapper.fullscreen-active
-.controls,
-.player-wrapper.fullscreen-active
-.subtitle-controls {
-
-
-    display:none !important;
-
-
-}
-
-
-
-.player-wrapper.fullscreen-active
-#subtitleContainer {
-
-
-    display:block;
-
-    z-index:999;
-
-
-}
-/* ==========================
-   V3.4.3 FULLSCREEN CLEAN
-========================== */
-
-
-/* video benar-benar memenuhi layar */
-
-.player-wrapper:fullscreen {
-
-    width:100vw !important;
-
-    height:100vh !important;
-
-    background:black;
-
-}
-
-
-
-/* sembunyikan SEMUA kontrol fullscreen */
-
-.player-wrapper:fullscreen .player-controls,
-.player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls {
-
-    display:none !important;
-
-}
-
-
-
-/* video penuh */
-
-.player-wrapper:fullscreen video {
-
-    width:100vw !important;
-
-    height:100vh !important;
-
-    object-fit:contain;
-
-}
-
-
-
-/* subtitle tetap hidup */
-
-.player-wrapper:fullscreen #subtitleContainer {
-
-    position:absolute;
-
-    bottom:80px;
-
-    width:80%;
-
-    left:10%;
-
-    z-index:999;
-
-}
-/* ==========================
-   V3.4.4 FULLSCREEN FIX
-========================== */
-
-
-/* container fullscreen */
-
-.player-wrapper:fullscreen {
-
-    width:100vw !important;
-
-    height:100vh !important;
-
-    max-width:none !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    display:block !important;
-
-    background:black;
-
-    overflow:hidden;
-
-}
-
-
-
-/* video penuh layar */
-
-.player-wrapper:fullscreen video {
-
-    width:100vw !important;
-
-    height:100vh !important;
-
-    max-width:none !important;
-
-    object-fit:cover !important;
-
-}
-
-
-
-/* hilangkan semua tombol */
-
-.player-wrapper:fullscreen .player-controls,
-.player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls {
-
-    display:none !important;
-
-}
-
-
-
-/* subtitle tetap */
-
-.player-wrapper:fullscreen #subtitleContainer {
-
-    position:absolute;
-
-    bottom:80px;
-
-    left:10%;
-
-    width:80%;
-
-    z-index:999;
 
 }
