@@ -1,6 +1,6 @@
 /* ==========================
-   PRO VIDEO PLAYER
-   PLAYER.CSS V3.4.7 STABLE
+   PRO VIDEO PLAYER CSS
+   V3.4.7 FULLSCREEN FIX
 ========================== */
 
 
@@ -8,8 +8,12 @@
    GLOBAL
 ========================== */
 
+*{
+    box-sizing:border-box;
+}
 
-body {
+
+body{
 
     margin:0;
 
@@ -17,13 +21,13 @@ body {
 
     color:white;
 
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 
 }
 
 
 
-.app {
+.app{
 
     max-width:1000px;
 
@@ -44,9 +48,11 @@ body {
 ========================== */
 
 
-.player-wrapper {
+.player-wrapper{
 
     position:relative;
+
+    background:black;
 
 }
 
@@ -54,13 +60,13 @@ body {
 
 
 
-video {
+video{
 
     width:100%;
 
-    background:black;
-
     display:block;
+
+    background:black;
 
 }
 
@@ -73,58 +79,41 @@ video {
 ========================== */
 
 
-#subtitleContainer {
-
+#subtitleContainer{
 
     position:absolute;
 
-
     bottom:70px;
-
 
     left:10%;
 
-
     width:80%;
-
 
     text-align:center;
 
-
     font-size:28px;
-
 
     font-weight:bold;
 
-
     line-height:1.4;
-
 
     color:white;
 
-
     text-shadow:
-
     2px 2px 5px black;
 
 
     z-index:20;
 
-
 }
 
 
 
-
-
-.active-word {
-
+.active-word{
 
     color:cyan !important;
 
-
     font-weight:bold;
-
 
 }
 
@@ -133,45 +122,35 @@ video {
 
 
 
-
 /* ==========================
-   PLAYER CONTROL
+   CONTROL UTAMA
 ========================== */
 
 
-.player-controls {
-
+.player-controls{
 
     display:flex;
-
 
     align-items:center;
 
-
     gap:10px;
 
-
     margin-top:10px;
-
 
 }
 
 
 
-.player-controls button {
+.player-controls button{
 
 
     background:#222;
 
-
     color:white;
-
 
     border:none;
 
-
     padding:8px 12px;
-
 
     cursor:pointer;
 
@@ -180,13 +159,10 @@ video {
 
 
 
-
-.player-controls input {
-
+.player-controls input{
 
     flex:1;
 
-
 }
 
 
@@ -194,24 +170,19 @@ video {
 
 
 
-
-
 /* ==========================
-   SPEED CONTROL
+   SPEED
 ========================== */
 
 
-.controls {
+.controls{
 
 
     display:flex;
 
-
     justify-content:center;
 
-
     gap:5px;
-
 
     margin-top:10px;
 
@@ -220,21 +191,16 @@ video {
 
 
 
-
-.controls button {
+.controls button{
 
 
     background:#222;
 
-
     color:white;
-
 
     border:none;
 
-
     padding:8px 12px;
-
 
     cursor:pointer;
 
@@ -245,29 +211,21 @@ video {
 
 
 
-
-
-
-
 /* ==========================
-   SUBTITLE CONTROL
+   SUBTITLE BUTTON
 ========================== */
 
 
-.subtitle-controls {
+.subtitle-controls{
 
 
     display:flex;
 
-
     justify-content:center;
-
 
     flex-wrap:wrap;
 
-
     gap:5px;
-
 
     margin-top:10px;
 
@@ -276,22 +234,16 @@ video {
 
 
 
-
-
-.subtitle-controls button {
+.subtitle-controls button{
 
 
     background:#222;
 
-
     color:white;
-
 
     border:none;
 
-
     padding:8px 12px;
-
 
     cursor:pointer;
 
@@ -303,27 +255,26 @@ video {
 
 
 
-
-
-
 /* ==========================
-   FULLSCREEN FINAL
+   FULLSCREEN CONTAINER
 ========================== */
 
 
-.player-wrapper:fullscreen {
+.player-wrapper:fullscreen{
+
+
+    position:fixed !important;
+
+
+    top:0;
+
+    left:0;
 
 
     width:100vw !important;
 
 
     height:100vh !important;
-
-
-    max-width:none !important;
-
-
-    max-height:none !important;
 
 
     margin:0 !important;
@@ -335,7 +286,10 @@ video {
     background:black;
 
 
-    display:flex !important;
+    z-index:9999;
+
+
+    display:flex;
 
 
     align-items:center;
@@ -354,7 +308,12 @@ video {
 
 
 
-.player-wrapper:fullscreen video {
+/* ==========================
+   VIDEO FULLSCREEN
+========================== */
+
+
+.player-wrapper:fullscreen video{
 
 
     width:100vw !important;
@@ -369,7 +328,7 @@ video {
     max-height:none !important;
 
 
-    object-fit:contain !important;
+    object-fit:cover !important;
 
 
 }
@@ -379,11 +338,12 @@ video {
 
 
 
+/* ==========================
+   SUBTITLE FULLSCREEN
+========================== */
 
-/* subtitle fullscreen */
 
-
-.player-wrapper:fullscreen #subtitleContainer {
+.player-wrapper:fullscreen #subtitleContainer{
 
 
     position:absolute;
@@ -408,24 +368,100 @@ video {
 
 
 
+/* ==========================
+   CONTROL FULLSCREEN
+========================== */
+
+
+.player-wrapper:fullscreen .player-controls,
+
+
+.player-wrapper:fullscreen .controls,
+
+
+.player-wrapper:fullscreen .subtitle-controls{
+
+
+    position:absolute;
+
+
+    z-index:200;
+
+
+}
+
+
+
+
+
+
+/* posisi kontrol bawah */
+
+
+.player-wrapper:fullscreen .player-controls{
+
+
+    bottom:20px;
+
+
+    left:0;
+
+
+    width:100%;
+
+
+}
+
+
+
+
+.player-wrapper:fullscreen .controls{
+
+
+    bottom:70px;
+
+
+    left:0;
+
+
+    width:100%;
+
+
+}
+
+
+
+
+.player-wrapper:fullscreen .subtitle-controls{
+
+
+    bottom:120px;
+
+
+    left:0;
+
+
+    width:100%;
+
+
+}
+
+
+
+
 
 
 
 /* ==========================
-   CONTROL HIDE / SHOW
-   V3.4.7
+   HIDE CONTROL
 ========================== */
 
 
+.player-wrapper:fullscreen.hide-control .player-controls,
 
-.player-wrapper:fullscreen.hide-control
-.player-controls,
+.player-wrapper:fullscreen.hide-control .controls,
 
-.player-wrapper:fullscreen.hide-control
-.controls,
-
-.player-wrapper:fullscreen.hide-control
-.subtitle-controls {
+.player-wrapper:fullscreen.hide-control .subtitle-controls{
 
 
     opacity:0;
@@ -444,15 +480,16 @@ video {
 
 
 
+/* ==========================
+   SHOW CONTROL
+========================== */
 
-.player-wrapper:fullscreen.show-control
-.player-controls,
 
-.player-wrapper:fullscreen.show-control
-.controls,
+.player-wrapper:fullscreen.show-control .player-controls,
 
-.player-wrapper:fullscreen.show-control
-.subtitle-controls {
+.player-wrapper:fullscreen.show-control .controls,
+
+.player-wrapper:fullscreen.show-control .subtitle-controls{
 
 
     opacity:1;
@@ -471,9 +508,6 @@ video {
 
 
 
-
-
-
 /* ==========================
    MOBILE
 ========================== */
@@ -482,38 +516,32 @@ video {
 @media(max-width:600px){
 
 
-    .app {
+.app{
 
+    padding:15px;
 
-        padding:15px;
-
-
-    }
-
+}
 
 
 
-    #subtitleContainer {
+#subtitleContainer{
 
 
-        font-size:20px;
+    font-size:20px;
+
+    bottom:50px;
 
 
-        bottom:50px;
-
-
-    }
-
+}
 
 
 
-    .player-controls {
+.player-controls{
 
 
-        flex-wrap:wrap;
+    flex-wrap:wrap;
 
-
-    }
+}
 
 
 }
