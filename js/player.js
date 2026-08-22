@@ -1,10 +1,14 @@
+// ==========================
+// PRO VIDEO PLAYER
+// PLAYER.JS V3.4.6
+// ==========================
+
+
 let video;
-
 let progressBar;
-
 let volumeControl;
 
-let subtitleContainer;
+let controlTimer;
 
 
 
@@ -19,11 +23,10 @@ async ()=>{
     );
 
 
-    subtitleContainer =
+    const subtitleContainer =
     document.getElementById(
         "subtitleContainer"
     );
-
 
 
     const subtitleStatus =
@@ -51,12 +54,8 @@ async ()=>{
     if(loaded){
 
 
-        if(subtitleStatus){
-
-            subtitleStatus.textContent =
-            "Aktif";
-
-        }
+        subtitleStatus.textContent =
+        "Aktif";
 
 
         subtitleEngine.start();
@@ -67,12 +66,8 @@ async ()=>{
     else{
 
 
-        if(subtitleStatus){
-
-            subtitleStatus.textContent =
-            "Gagal";
-
-        }
+        subtitleStatus.textContent =
+        "Gagal";
 
 
     }
@@ -81,8 +76,6 @@ async ()=>{
 
     window.subtitleEngine =
     subtitleEngine;
-
-
 
 
 
@@ -102,96 +95,84 @@ async ()=>{
 
 
 
-    // ====================
-    // PROGRESS BAR
-    // ====================
+    // progress video
+
+    video.addEventListener(
+    "timeupdate",
+    ()=>{
 
 
-    if(progressBar){
+        if(video.duration){
 
 
-        video.addEventListener(
-        "timeupdate",
-        ()=>{
+            progressBar.value =
+            (video.currentTime /
+            video.duration) * 100;
 
 
-            if(video.duration){
+        }
 
 
-                progressBar.value =
-                (video.currentTime /
-                video.duration)
-                *100;
-
-
-            }
-
-
-        });
-
-
-
-        progressBar.addEventListener(
-        "input",
-        ()=>{
-
-
-            if(video.duration){
-
-
-                video.currentTime =
-                (progressBar.value/100)
-                *
-                video.duration;
-
-
-            }
-
-
-        });
-
-
-    }
+    });
 
 
 
 
 
+    // geser progress
 
-    // ====================
-    // VOLUME
-    // ====================
-
-
-    if(volumeControl){
+    progressBar.addEventListener(
+    "input",
+    ()=>{
 
 
-        volumeControl.addEventListener(
-        "input",
-        ()=>{
+        if(video.duration){
 
 
-            video.volume =
-            volumeControl.value / 100;
+            video.currentTime =
+            (progressBar.value / 100)
+            *
+            video.duration;
 
 
-            if(video.volume === 0){
-
-                video.muted = true;
-
-            }
-
-            else{
-
-                video.muted = false;
-
-            }
+        }
 
 
-        });
+    });
 
 
-    }
+
+
+
+    // volume
+
+    volumeControl.addEventListener(
+    "input",
+    ()=>{
+
+
+        video.volume =
+        volumeControl.value / 100;
+
+
+
+        if(video.volume > 0){
+
+            video.muted=false;
+
+        }
+
+
+        else{
+
+
+            video.muted=true;
+
+
+        }
+
+
+    });
 
 
 
@@ -204,9 +185,28 @@ async ()=>{
 
 
 
-// ====================
+// ==========================
+// SPEED
+// ==========================
+
+
+function changeSpeed(speed){
+
+
+    video.playbackRate =
+    speed;
+
+
+}
+
+
+
+
+
+
+// ==========================
 // PLAY PAUSE
-// ====================
+// ==========================
 
 
 function togglePlay(){
@@ -236,11 +236,9 @@ function togglePlay(){
 
 
 
-
-
-// ====================
+// ==========================
 // MUTE
-// ====================
+// ==========================
 
 
 function toggleMute(){
@@ -257,44 +255,15 @@ function toggleMute(){
 
 
 
-
-
-// ====================
-// SPEED
-// ====================
-
-
-function changeSpeed(speed){
-
-
-    video.playbackRate =
-    speed;
-
-
-}
-
-
-
-
-
-
-
-
-// ====================
-// SUBTITLE ON OFF
-// ====================
+// ==========================
+// SUBTITLE
+// ==========================
 
 
 function toggleSubtitle(){
 
 
-    if(window.subtitleEngine){
-
-
-        window.subtitleEngine.toggle();
-
-
-    }
+    window.subtitleEngine.toggle();
 
 
 }
@@ -302,31 +271,20 @@ function toggleSubtitle(){
 
 
 
-
-
-
-
-// ====================
-// SUBTITLE SIZE
-// ====================
-
-
 function subtitleSize(size){
 
 
-
-    if(!subtitleContainer){
-
-        return;
-
-    }
+    const subtitle =
+    document.getElementById(
+        "subtitleContainer"
+    );
 
 
 
-    if(size=="small"){
+    if(size==="small"){
 
 
-        subtitleContainer.style.fontSize =
+        subtitle.style.fontSize =
         "18px";
 
 
@@ -334,10 +292,10 @@ function subtitleSize(size){
 
 
 
-    if(size=="medium"){
+    if(size==="medium"){
 
 
-        subtitleContainer.style.fontSize =
+        subtitle.style.fontSize =
         "28px";
 
 
@@ -345,43 +303,29 @@ function subtitleSize(size){
 
 
 
-    if(size=="large"){
+    if(size==="large"){
 
 
-        subtitleContainer.style.fontSize =
+        subtitle.style.fontSize =
         "38px";
 
 
     }
 
 
-
 }
 
 
 
 
-
-
-
-
-// ====================
-// SUBTITLE DELAY
-// ====================
 
 
 function subtitleDelay(value){
 
 
-    if(window.subtitleEngine){
-
-
-        window.subtitleEngine.setDelay(
-            value
-        );
-
-
-    }
+    window.subtitleEngine.setDelay(
+        value
+    );
 
 
 }
@@ -393,17 +337,19 @@ function subtitleDelay(value){
 
 
 
-// ====================
-// FULLSCREEN V3.4.2
-// ====================
+// ==========================
+// FULLSCREEN
+// ==========================
 
 
 function fullscreenVideo(){
+
 
     const player =
     document.querySelector(
         ".player-wrapper"
     );
+
 
 
     if(!document.fullscreenElement){
@@ -412,11 +358,14 @@ function fullscreenVideo(){
         player.requestFullscreen()
         .then(()=>{
 
+
             player.classList.add(
-                "fullscreen-active"
+                "hide-control"
             );
 
+
         });
+
 
 
     }
@@ -424,21 +373,25 @@ function fullscreenVideo(){
     else{
 
 
-        document.exitFullscreen()
-        .then(()=>{
-
-            player.classList.remove(
-                "fullscreen-active"
-            );
-
-        });
+        document.exitFullscreen();
 
 
     }
 
 
 }
-let hideTimer;
+
+
+
+
+
+
+
+// ==========================
+// FULLSCREEN CONTROL
+// YOUTUBE STYLE
+// ==========================
+
 
 
 document.addEventListener(
@@ -452,208 +405,15 @@ document.addEventListener(
     );
 
 
+
     if(document.fullscreenElement){
+
 
 
         player.classList.add(
             "hide-control"
         );
 
-
-        player.addEventListener(
-            "click",
-            showFullscreenControl
-        );
-
-
-    }
-
-
-});
-
-
-
-
-
-function showFullscreenControl(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-    player.classList.remove(
-        "hide-control"
-    );
-
-
-    player.classList.add(
-        "show-control"
-    );
-
-
-
-    clearTimeout(
-        hideTimer
-    );
-
-
-
-    hideTimer =
-    setTimeout(
-        ()=>{
-
-
-            player.classList.remove(
-                "show-control"
-            );
-
-
-            player.classList.add(
-                "hide-control"
-            );
-
-
-        },
-        3000
-    );
-
-
-}
-// ==========================
-// FULLSCREEN TOUCH CONTROL
-// ==========================
-
-
-let controlTimer;
-
-
-
-document.addEventListener(
-"fullscreenchange",
-()=>{
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-    if(document.fullscreenElement){
-
-
-        hideControls();
-
-
-        player.addEventListener(
-            "click",
-            showControls
-        );
-
-
-    }
-
-
-});
-
-
-
-
-
-function hideControls(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-    player.classList.add(
-        "hide-control"
-    );
-
-
-    player.classList.remove(
-        "show-control"
-    );
-
-
-}
-
-
-
-
-
-function showControls(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-    player.classList.remove(
-        "hide-control"
-    );
-
-
-    player.classList.add(
-        "show-control"
-    );
-
-
-
-    clearTimeout(
-        controlTimer
-    );
-
-
-
-    controlTimer =
-    setTimeout(
-        ()=>{
-
-
-            hideControls();
-
-
-        },
-        3000
-    );
-
-
-}
-// ==========================
-// V3.4.6 FULLSCREEN TOUCH CONTROL
-// ==========================
-
-
-let controlTimer;
-
-
-
-document.addEventListener(
-"fullscreenchange",
-()=>{
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-    if(document.fullscreenElement){
-
-
-        player.classList.add(
-            "hide-control"
-        );
 
 
         player.addEventListener(
@@ -662,9 +422,18 @@ document.addEventListener(
         );
 
 
+
+        player.addEventListener(
+            "touchstart",
+            showFullscreenControls
+        );
+
+
+
     }
 
-    else {
+
+    else{
 
 
         player.classList.remove(
@@ -680,6 +449,7 @@ document.addEventListener(
     }
 
 
+
 });
 
 
@@ -687,7 +457,10 @@ document.addEventListener(
 
 
 
+
+
 function showFullscreenControls(){
+
 
 
     const player =
@@ -702,9 +475,11 @@ function showFullscreenControls(){
     );
 
 
+
     player.classList.add(
         "show-control"
     );
+
 
 
 
@@ -714,24 +489,27 @@ function showFullscreenControls(){
 
 
 
+
     controlTimer =
     setTimeout(
-        ()=>{
+    ()=>{
 
 
-            player.classList.remove(
-                "show-control"
-            );
+        player.classList.remove(
+            "show-control"
+        );
 
 
-            player.classList.add(
-                "hide-control"
-            );
+        player.classList.add(
+            "hide-control"
+        );
 
 
-        },
-        3000
+
+    },
+    3000
     );
+
 
 
 }
