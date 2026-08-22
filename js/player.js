@@ -1,7 +1,7 @@
-// ===================================
+// ==========================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.5.2
-// ===================================
+// PLAYER.JS V3.5 FIX
+// ==========================
 
 
 let video;
@@ -12,9 +12,9 @@ let controlTimer;
 
 
 
-// ===================================
-// INITIALIZE
-// ===================================
+// ==========================
+// INIT
+// ==========================
 
 
 document.addEventListener(
@@ -22,117 +22,169 @@ document.addEventListener(
 async ()=>{
 
 
-video =
-document.getElementById(
-"videoPlayer"
-);
+    video =
+    document.getElementById(
+        "videoPlayer"
+    );
 
 
 
-progressBar =
-document.getElementById(
-"progressBar"
-);
+    progressBar =
+    document.getElementById(
+        "progressBar"
+    );
 
 
 
-volumeControl =
-document.getElementById(
-"volumeControl"
-);
-
-
-
-const subtitleContainer =
-document.getElementById(
-"subtitleContainer"
-);
-
-
-
-const subtitleStatus =
-document.getElementById(
-"subtitleStatus"
-);
-
-
-
-// ===============================
-// SUBTITLE ENGINE
-// ===============================
-
-
-if(typeof SubtitleEngine !== "undefined"){
-
-
-const subtitleEngine =
-new SubtitleEngine(
-video,
-subtitleContainer
-);
-
-
-
-const loaded =
-await subtitleEngine.load(
-"./subtitles/indonesia.json"
-);
-
-
-
-if(loaded){
-
-
-subtitleStatus.innerHTML =
-"Aktif";
-
-
-subtitleEngine.start();
-
-
-}
-
-else{
-
-
-subtitleStatus.innerHTML =
-"Gagal";
-
-
-}
-
-
-
-window.subtitleEngine =
-subtitleEngine;
-
-
-}
+    volumeControl =
+    document.getElementById(
+        "volumeControl"
+    );
 
 
 
 
+    // ======================
+    // SUBTITLE ENGINE
+    // ======================
 
 
-// ===============================
-// VIDEO PROGRESS
-// ===============================
+    const subtitleContainer =
+    document.getElementById(
+        "subtitleContainer"
+    );
 
 
-video.addEventListener(
-"timeupdate",
-()=>{
+    const subtitleStatus =
+    document.getElementById(
+        "subtitleStatus"
+    );
 
 
-if(video.duration){
+
+    if(typeof SubtitleEngine !== "undefined"){
 
 
-progressBar.value =
-(video.currentTime /
-video.duration) * 100;
+        const subtitleEngine =
+        new SubtitleEngine(
+            video,
+            subtitleContainer
+        );
 
 
-}
+
+        const loaded =
+        await subtitleEngine.load(
+            "./subtitles/indonesia.json"
+        );
+
+
+
+        if(loaded){
+
+
+            subtitleStatus.textContent =
+            "Aktif";
+
+
+            subtitleEngine.start();
+
+
+        }
+
+        else{
+
+
+            subtitleStatus.textContent =
+            "Gagal";
+
+
+        }
+
+
+
+        window.subtitleEngine =
+        subtitleEngine;
+
+
+    }
+
+
+
+    // ======================
+    // PROGRESS
+    // ======================
+
+
+    video.addEventListener(
+    "timeupdate",
+    ()=>{
+
+
+        if(video.duration){
+
+
+            progressBar.value =
+            (
+                video.currentTime /
+                video.duration
+            ) * 100;
+
+
+        }
+
+
+    });
+
+
+
+
+    progressBar.addEventListener(
+    "input",
+    ()=>{
+
+
+        if(video.duration){
+
+
+            video.currentTime =
+            (
+                progressBar.value /
+                100
+            )
+            *
+            video.duration;
+
+
+        }
+
+
+    });
+
+
+
+
+
+    // ======================
+    // VOLUME
+    // ======================
+
+
+    volumeControl.addEventListener(
+    "input",
+    ()=>{
+
+
+        video.volume =
+        volumeControl.value / 100;
+
+
+
+        video.muted =
+        video.volume === 0;
+
+
+    });
 
 
 
@@ -143,109 +195,35 @@ video.duration) * 100;
 
 
 
-
-progressBar.addEventListener(
-"input",
-()=>{
-
-
-if(video.duration){
-
-
-video.currentTime =
-(progressBar.value / 100)
-*
-video.duration;
-
-
-}
-
-
-});
-
-
-
-
-
-
-
-// ===============================
-// VOLUME
-// ===============================
-
-
-volumeControl.addEventListener(
-"input",
-()=>{
-
-
-video.volume =
-volumeControl.value / 100;
-
-
-
-video.muted =
-video.volume === 0;
-
-
-
-});
-
-
-
-});
-
-
-
-
-
-
-
-
-// ===================================
+// ==========================
 // PLAY PAUSE
-// ===================================
+// ==========================
 
 
 function togglePlay(){
 
 
-if(video.paused){
-
-
-video.play();
-
-
-}
-
-else{
-
-
-video.pause();
-
-
-}
-
-
-}
+    if(!video)
+    return;
 
 
 
+    if(video.paused){
 
 
+        video.play()
+        .catch(()=>{});
 
 
+    }
 
-// ===================================
-// MUTE
-// ===================================
-
-
-function toggleMute(){
+    else{
 
 
-video.muted =
-!video.muted;
+        video.pause();
+
+
+    }
 
 
 }
@@ -256,18 +234,20 @@ video.muted =
 
 
 
-
-
-// ===================================
+// ==========================
 // SPEED
-// ===================================
+// ==========================
 
 
 function changeSpeed(speed){
 
 
-video.playbackRate =
-speed;
+    if(video){
+
+        video.playbackRate =
+        speed;
+
+    }
 
 
 }
@@ -278,29 +258,46 @@ speed;
 
 
 
+// ==========================
+// MUTE
+// ==========================
 
 
-// ===================================
+function toggleMute(){
+
+
+    if(video){
+
+        video.muted =
+        !video.muted;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+// ==========================
 // SUBTITLE
-// ===================================
+// ==========================
 
 
 function toggleSubtitle(){
 
 
-if(window.subtitleEngine){
+    if(window.subtitleEngine){
 
+        window.subtitleEngine.toggle();
 
-window.subtitleEngine.toggle();
+    }
 
 
 }
-
-
-}
-
-
-
 
 
 
@@ -308,46 +305,42 @@ window.subtitleEngine.toggle();
 function subtitleSize(size){
 
 
-let sub =
-document.getElementById(
-"subtitleContainer"
-);
+    const subtitle =
+    document.getElementById(
+        "subtitleContainer"
+    );
+
+
+    if(!subtitle)
+    return;
 
 
 
-if(size==="small"){
+    if(size==="small"){
+
+        subtitle.style.fontSize =
+        "18px";
+
+    }
 
 
-sub.style.fontSize="18px";
+    if(size==="medium"){
+
+        subtitle.style.fontSize =
+        "28px";
+
+    }
+
+
+    if(size==="large"){
+
+        subtitle.style.fontSize =
+        "38px";
+
+    }
 
 
 }
-
-
-
-if(size==="medium"){
-
-
-sub.style.fontSize="28px";
-
-
-}
-
-
-
-if(size==="large"){
-
-
-sub.style.fontSize="38px";
-
-
-}
-
-
-}
-
-
-
 
 
 
@@ -356,66 +349,103 @@ sub.style.fontSize="38px";
 function subtitleDelay(value){
 
 
-if(window.subtitleEngine){
+    if(window.subtitleEngine){
 
+        window.subtitleEngine.setDelay(
+            value
+        );
 
-window.subtitleEngine.setDelay(
-value
-);
+    }
 
 
 }
 
 
-}
 
 
 
 
 
 
+// ==========================
+// QUALITY SWITCH V3.5 FIX
+// ==========================
+
+
+function changeQuality(quality){
+
+
+    if(!video)
+    return;
 
 
 
-// ===================================
-// QUALITY SWITCH V3.5.3 FIX
-// ===================================
-
-function changeQuality(q){
+    let currentTime =
+    video.currentTime;
 
 
-    let currentTime = video.currentTime;
 
-    let isPlaying = !video.paused;
+    let playing =
+    !video.paused;
+
+
+
+    let volume =
+    video.volume;
+
 
 
     let source = "";
 
 
-    if(q === "720"){
-        source = "videos/sample-720.mp4";
+
+    switch(quality){
+
+
+        case "720":
+
+            source =
+            "videos/sample-720.mp4";
+
+        break;
+
+
+
+        case "1080":
+
+            source =
+            "videos/sample-1080.mp4";
+
+        break;
+
+
+
+        case "1440":
+
+            source =
+            "videos/sample-1440.mp4";
+
+        break;
+
+
+
+        case "2160":
+
+            source =
+            "videos/sample-2160.mp4";
+
+        break;
+
+
+
+        default:
+
+            return;
+
+
     }
 
 
-    if(q === "1080"){
-        source = "videos/sample-1080.mp4";
-    }
-
-
-    if(q === "1440"){
-        source = "videos/sample-1440.mp4";
-    }
-
-
-    if(q === "2160"){
-        source = "videos/sample-2160.mp4";
-    }
-
-
-
-    if(source === ""){
-        return;
-    }
 
 
 
@@ -423,7 +453,8 @@ function changeQuality(q){
 
 
 
-    video.src = source;
+    video.src =
+    source;
 
 
 
@@ -431,31 +462,37 @@ function changeQuality(q){
 
 
 
-    video.addEventListener(
-        "loadedmetadata",
-        function restore(){
 
-            video.currentTime = currentTime;
+    video.onloadedmetadata =
+    ()=>{
 
 
-            if(isPlaying){
-
-                video.play()
-                .catch(error=>{
-                    console.log(error);
-                });
-
-            }
+        video.currentTime =
+        Math.min(
+            currentTime,
+            video.duration
+        );
 
 
-            video.removeEventListener(
-                "loadedmetadata",
-                restore
-            );
+
+        video.volume =
+        volume;
+
+
+
+        if(playing){
+
+
+            video.play()
+            .catch(()=>{});
 
 
         }
-    );
+
+
+
+    };
+
 
 }
 
@@ -465,43 +502,49 @@ function changeQuality(q){
 
 
 
-
-
-// ===================================
+// ==========================
 // FULLSCREEN
-// ===================================
+// ==========================
 
 
 function fullscreenVideo(){
 
 
-const player =
-document.querySelector(
-".player-wrapper"
-);
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
 
 
 
-if(!document.fullscreenElement){
+    if(!document.fullscreenElement){
 
 
+        player.requestFullscreen()
+        .then(()=>{
 
-player.requestFullscreen();
 
+            player.classList.add(
+                "hide-control"
+            );
+
+
+        });
+
+
+    }
+
+    else{
+
+
+        document.exitFullscreen();
+
+
+    }
 
 
 }
 
-else{
-
-
-document.exitFullscreen();
-
-
-}
-
-
-}
 
 
 
@@ -510,11 +553,9 @@ document.exitFullscreen();
 
 
 
-
-// ===================================
+// ==========================
 // FULLSCREEN CONTROL
-// YOUTUBE STYLE
-// ===================================
+// ==========================
 
 
 document.addEventListener(
@@ -522,115 +563,35 @@ document.addEventListener(
 ()=>{
 
 
-const player =
-document.querySelector(
-".player-wrapper"
-);
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
 
 
 
-if(document.fullscreenElement){
+    if(!player)
+    return;
 
 
 
-player.classList.add(
-"hide-control"
-);
+    if(document.fullscreenElement){
+
+
+        player.classList.add(
+            "hide-control"
+        );
+
+
+        player.onclick =
+        showFullscreenControls;
 
 
 
-player.onclick =
-showFullscreenControls;
+    }
 
 
-
-player.ontouchstart =
-showFullscreenControls;
+    else{
 
 
-
-}
-
-else{
-
-
-player.classList.remove(
-"hide-control"
-);
-
-
-
-player.classList.remove(
-"show-control"
-);
-
-
-
-}
-
-
-});
-
-
-
-
-
-
-
-
-
-function showFullscreenControls(){
-
-
-
-const player =
-document.querySelector(
-".player-wrapper"
-);
-
-
-
-player.classList.remove(
-"hide-control"
-);
-
-
-
-player.classList.add(
-"show-control"
-);
-
-
-
-
-clearTimeout(
-controlTimer
-);
-
-
-
-
-controlTimer =
-setTimeout(
-()=>{
-
-
-player.classList.remove(
-"show-control"
-);
-
-
-
-player.classList.add(
-"hide-control"
-);
-
-
-
-},
-3000
-);
-
-
-
-}
+        player
