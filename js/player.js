@@ -522,3 +522,109 @@ function showFullscreenControl(){
 
 
 }
+// ==========================
+// FULLSCREEN TOUCH CONTROL
+// ==========================
+
+
+let controlTimer;
+
+
+
+document.addEventListener(
+"fullscreenchange",
+()=>{
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    if(document.fullscreenElement){
+
+
+        hideControls();
+
+
+        player.addEventListener(
+            "click",
+            showControls
+        );
+
+
+    }
+
+
+});
+
+
+
+
+
+function hideControls(){
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    player.classList.add(
+        "hide-control"
+    );
+
+
+    player.classList.remove(
+        "show-control"
+    );
+
+
+}
+
+
+
+
+
+function showControls(){
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    player.classList.remove(
+        "hide-control"
+    );
+
+
+    player.classList.add(
+        "show-control"
+    );
+
+
+
+    clearTimeout(
+        controlTimer
+    );
+
+
+
+    controlTimer =
+    setTimeout(
+        ()=>{
+
+
+            hideControls();
+
+
+        },
+        3000
+    );
+
+
+}
