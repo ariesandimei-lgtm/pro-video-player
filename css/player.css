@@ -416,3 +416,59 @@ V3.4.1 FULLSCREEN CONTROL FIX
     z-index:90;
 
 }
+/* ==========================
+V3.4.2 AUTO HIDE CONTROL
+========================== */
+
+
+/* saat fullscreen aktif */
+
+.player-wrapper.fullscreen-mode
+.player-controls,
+.player-wrapper.fullscreen-mode
+.controls,
+.player-wrapper.fullscreen-mode
+.subtitle-controls {
+
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:0.3s;
+
+
+}
+
+
+
+/* ketika mouse disentuh / layar disentuh */
+
+
+.player-wrapper.fullscreen-mode:hover
+.player-controls,
+.player-wrapper.fullscreen-mode:hover
+.controls,
+.player-wrapper.fullscreen-mode:hover
+.subtitle-controls {
+
+
+    opacity:1;
+
+    pointer-events:auto;
+
+
+}
+
+
+
+/* subtitle tetap hidup */
+
+
+.player-wrapper.fullscreen-mode
+#subtitleContainer {
+
+
+    z-index:50;
+
+}
