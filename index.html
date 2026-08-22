@@ -9,6 +9,7 @@
 
 <title>PRO Video Player V3.5</title>
 
+
 <link rel="stylesheet" href="css/player.css">
 
 </head>
@@ -20,42 +21,61 @@
 <main class="app">
 
 
-<h1>
+<h1 class="app-title">
 PRO VIDEO PLAYER
 </h1>
 
 
-<p>
+<p class="app-subtitle">
 Smart Indonesian Subtitle Engine
 </p>
+
+
 
 
 
 <section class="player-wrapper">
 
 
+<!-- VIDEO -->
+
 <video
 id="videoPlayer"
+controls
 playsinline
-preload="metadata"
+preload="auto"
 >
 
+
 <source
-src="videos/sample.mp4"
+src="./videos/sample.mp4"
 type="video/mp4"
 >
+
+
+Browser tidak mendukung video HTML5.
+
 
 </video>
 
 
 
 
+
+
+
+
+<!-- CONTROL -->
+
 <div class="player-controls">
 
 
 <button onclick="togglePlay()">
+
 ▶ / ⏸
+
 </button>
+
 
 
 <input
@@ -67,9 +87,15 @@ value="0"
 >
 
 
+
+
 <button onclick="toggleMute()">
+
 🔊
+
 </button>
+
+
 
 
 <input
@@ -81,15 +107,27 @@ value="100"
 >
 
 
+
+
 <button onclick="fullscreenVideo()">
+
 ⛶
+
 </button>
+
 
 
 </div>
 
 
 
+
+
+
+
+
+
+<!-- QUALITY -->
 
 
 <div class="quality-controls">
@@ -115,10 +153,18 @@ value="100"
 </button>
 
 
+
 </div>
 
 
 
+
+
+
+
+
+
+<!-- SPEED -->
 
 
 <div class="controls">
@@ -144,58 +190,100 @@ value="100"
 </button>
 
 
+
 </div>
 
 
 
+
+
+
+
+
+
+<!-- SUBTITLE -->
 
 
 <div class="subtitle-controls">
 
 
 <button onclick="toggleSubtitle()">
+
 Subtitle ON/OFF
+
 </button>
+
 
 
 <button onclick="subtitleSize('small')">
+
 Small
+
 </button>
+
 
 
 <button onclick="subtitleSize('medium')">
+
 Medium
+
 </button>
+
 
 
 <button onclick="subtitleSize('large')">
+
 Large
+
 </button>
+
 
 
 <button onclick="subtitleDelay(-0.5)">
+
 -500ms
+
 </button>
+
 
 
 <button onclick="subtitleDelay(0)">
+
 0ms
+
 </button>
+
 
 
 <button onclick="subtitleDelay(0.5)">
+
 +500ms
+
 </button>
 
 
+
 </div>
 
 
+
+
+
+
+
+
+
+<!-- SUBTITLE DISPLAY -->
 
 
 <div
-id="subtitleContainer">
+id="subtitleContainer"
+class="subtitle-container"
+>
+
 </div>
+
+
 
 
 
@@ -204,15 +292,25 @@ id="subtitleContainer">
 
 
 
+
+
+
+
 <div class="status-panel">
+
 
 Subtitle:
 
 <strong id="subtitleStatus">
+
 Memuat...
+
 </strong>
 
+
 </div>
+
+
 
 
 
