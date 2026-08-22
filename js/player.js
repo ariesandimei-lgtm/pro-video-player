@@ -1,6 +1,6 @@
 // ==========================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.4.6 STABLE
+// PLAYER.JS V3.5
 // ==========================
 
 
@@ -8,13 +8,8 @@ let video;
 let progressBar;
 let volumeControl;
 
-let hideTimer;
+let controlTimer;
 
-
-
-// ==========================
-// INITIALIZE
-// ==========================
 
 
 document.addEventListener(
@@ -41,6 +36,11 @@ async ()=>{
 
 
 
+    // ==========================
+    // SUBTITLE ENGINE
+    // ==========================
+
+
     const subtitleEngine =
     new SubtitleEngine(
         video,
@@ -58,21 +58,17 @@ async ()=>{
 
     if(loaded){
 
-
         subtitleStatus.textContent =
         "Aktif";
 
-
         subtitleEngine.start();
 
-
     }
-    else{
 
+    else{
 
         subtitleStatus.textContent =
         "Gagal";
-
 
     }
 
@@ -83,12 +79,15 @@ async ()=>{
 
 
 
+    // ==========================
+    // CONTROL
+    // ==========================
+
 
     progressBar =
     document.getElementById(
         "progressBar"
     );
-
 
 
     volumeControl =
@@ -97,12 +96,6 @@ async ()=>{
     );
 
 
-
-
-
-    // ==========================
-    // PROGRESS BAR
-    // ==========================
 
 
     video.addEventListener(
@@ -127,7 +120,6 @@ async ()=>{
 
 
 
-
     progressBar.addEventListener(
     "input",
     ()=>{
@@ -137,7 +129,7 @@ async ()=>{
 
 
             video.currentTime =
-            (progressBar.value / 100)
+            (progressBar.value/100)
             *
             video.duration;
 
@@ -151,12 +143,6 @@ async ()=>{
 
 
 
-
-    // ==========================
-    // VOLUME
-    // ==========================
-
-
     volumeControl.addEventListener(
     "input",
     ()=>{
@@ -167,16 +153,8 @@ async ()=>{
 
 
 
-        if(video.volume > 0){
-
-            video.muted=false;
-
-        }
-        else{
-
-            video.muted=true;
-
-        }
+        video.muted =
+        video.volume === 0;
 
 
     });
@@ -184,9 +162,6 @@ async ()=>{
 
 
 });
-
-
-
 
 
 
@@ -203,22 +178,17 @@ function togglePlay(){
 
     if(video.paused){
 
-
         video.play();
 
-
     }
-    else{
 
+    else{
 
         video.pause();
 
-
     }
 
-
 }
-
 
 
 
@@ -232,10 +202,8 @@ function togglePlay(){
 
 function changeSpeed(speed){
 
-
     video.playbackRate =
     speed;
-
 
 }
 
@@ -244,21 +212,17 @@ function changeSpeed(speed){
 
 
 
-
 // ==========================
-// MUTE
+// VOLUME
 // ==========================
 
 
 function toggleMute(){
 
-
     video.muted =
     !video.muted;
 
-
 }
-
 
 
 
@@ -273,14 +237,9 @@ function toggleMute(){
 
 function toggleSubtitle(){
 
-
     window.subtitleEngine.toggle();
 
-
 }
-
-
-
 
 
 
@@ -293,56 +252,41 @@ function subtitleSize(size){
     );
 
 
-
     if(size==="small"){
-
 
         subtitle.style.fontSize =
         "18px";
 
-
     }
-
 
 
     if(size==="medium"){
 
-
         subtitle.style.fontSize =
         "28px";
-
 
     }
 
 
-
     if(size==="large"){
-
 
         subtitle.style.fontSize =
         "38px";
-
 
     }
 
 
 }
-
-
-
 
 
 
 function subtitleDelay(value){
 
-
     window.subtitleEngine.setDelay(
         value
     );
 
-
 }
-
 
 
 
@@ -372,6 +316,7 @@ function fullscreenVideo(){
 
 
     }
+
     else{
 
 
@@ -389,7 +334,6 @@ function fullscreenVideo(){
 
 
 
-
 // ==========================
 // FULLSCREEN AUTO HIDE
 // ==========================
@@ -400,45 +344,38 @@ document.addEventListener(
 ()=>{
 
 
-    const player =
-    document.querySelector(
-        ".player-wrapper"
+const player =
+document.querySelector(
+".player-wrapper"
+);
+
+
+
+if(document.fullscreenElement){
+
+
+    player.classList.add(
+        "hide-control"
     );
 
 
 
-    if(document.fullscreenElement){
+}
+
+else{
 
 
-        hideControl();
+    player.classList.remove(
+        "hide-control"
+    );
 
 
-
-        player.onclick =
-        ()=>{
-
-
-            showControl();
+    player.classList.remove(
+        "show-control"
+    );
 
 
-        };
-
-
-    }
-    else{
-
-
-        player.classList.remove(
-            "hide-control"
-        );
-
-
-        player.classList.remove(
-            "show-control"
-        );
-
-
-    }
+}
 
 
 
@@ -449,50 +386,27 @@ document.addEventListener(
 
 
 
-
-function hideControl(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
+document.querySelector(
+".player-wrapper"
+)
+.addEventListener(
+"click",
+()=>{
 
 
-
-    player.classList.add(
-        "hide-control"
-    );
-
-
-    player.classList.remove(
-        "show-control"
-    );
-
-
-}
+const player =
+document.querySelector(
+".player-wrapper"
+);
 
 
 
-
-
-
-
-
-function showControl(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
+if(document.fullscreenElement){
 
 
     player.classList.remove(
         "hide-control"
     );
-
 
 
     player.classList.add(
@@ -501,38 +415,50 @@ function showControl(){
 
 
 
-    clearTimeout(
-        hideTimer
-    );
+clearTimeout(controlTimer);
 
 
 
-    hideTimer =
-    setTimeout(
-    ()=>{
+controlTimer =
+setTimeout(
+()=>{
 
 
-        hideControl();
+player.classList.remove(
+"show-control"
+);
 
 
-    },
-    3000
-    );
+player.classList.add(
+"hide-control"
+);
+
+
+},
+3000
+);
+
 
 
 }
+
+
+});
+
+
+
+
+
+
+
+
+
 // ==========================
 // QUALITY SELECTOR V3.5
 // ==========================
 
 
 function changeQuality(quality){
-
-
-    const video =
-    document.getElementById(
-        "videoPlayer"
-    );
 
 
     const currentTime =
@@ -548,45 +474,58 @@ function changeQuality(quality){
 
 
 
-    if(quality === "720"){
+    switch(quality){
 
-        source =
-        "videos/sample-720.mp4";
+
+        case "720":
+
+            source =
+            "video/sample-720.mp4";
+
+        break;
+
+
+
+        case "1080":
+
+            source =
+            "video/sample-1080.mp4";
+
+        break;
+
+
+
+        case "1440":
+
+            source =
+            "video/sample-1440.mp4";
+
+        break;
+
+
+
+        case "2160":
+
+            source =
+            "video/sample-2160.mp4";
+
+        break;
+
+
+        default:
+
+            source =
+            "video/sample.mp4";
 
     }
 
 
 
-    if(quality === "1080"){
-
-        source =
-        "videos/sample-1080.mp4";
-
-    }
 
 
+    video.src =
+    source;
 
-    if(quality === "1440"){
-
-        source =
-        "videos/sample-1440.mp4";
-
-    }
-
-
-
-    if(quality === "2160"){
-
-        source =
-        "videos/sample-2160.mp4";
-
-    }
-
-
-
-
-
-    video.src = source;
 
 
     video.load();
@@ -600,7 +539,13 @@ function changeQuality(quality){
 
     if(isPlaying){
 
-        video.play();
+
+        video.play()
+        .catch(
+        error=>{
+            console.log(error);
+        });
+
 
     }
 
