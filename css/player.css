@@ -410,3 +410,38 @@ video {
 
 
 }
+/* ==========================
+   TOUCH CONTROL FIX
+   V3.4.6
+========================== */
+
+
+/* default saat fullscreen */
+
+.player-wrapper:fullscreen.hide-control .player-controls,
+.player-wrapper:fullscreen.hide-control .controls,
+.player-wrapper:fullscreen.hide-control .subtitle-controls {
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:opacity .3s ease;
+
+}
+
+
+
+/* muncul saat layar disentuh */
+
+.player-wrapper:fullscreen.show-control .player-controls,
+.player-wrapper:fullscreen.show-control .controls,
+.player-wrapper:fullscreen.show-control .subtitle-controls {
+
+    opacity:1;
+
+    pointer-events:auto;
+
+    transition:opacity .3s ease;
+
+}
