@@ -378,118 +378,84 @@ value
 
 
 // ===================================
-// QUALITY SWITCH V3.5.2
+// QUALITY SWITCH V3.5.3 FIX
 // ===================================
-
 
 function changeQuality(q){
 
 
+    let currentTime = video.currentTime;
 
-let currentTime =
-video.currentTime;
+    let isPlaying = !video.paused;
 
 
+    let source = "";
 
-let playing =
-!video.paused;
 
+    if(q === "720"){
+        source = "videos/sample-720.mp4";
+    }
 
 
-let source = "";
+    if(q === "1080"){
+        source = "videos/sample-1080.mp4";
+    }
 
 
+    if(q === "1440"){
+        source = "videos/sample-1440.mp4";
+    }
 
 
+    if(q === "2160"){
+        source = "videos/sample-2160.mp4";
+    }
 
-switch(q){
 
 
-case "720":
+    if(source === ""){
+        return;
+    }
 
-source =
-"./videos/sample-720.mp4";
 
-break;
 
+    video.pause();
 
 
-case "1080":
 
-source =
-"./videos/sample-1080.mp4";
+    video.src = source;
 
-break;
 
 
+    video.load();
 
-case "1440":
 
-source =
-"./videos/sample-1440.mp4";
 
-break;
+    video.addEventListener(
+        "loadedmetadata",
+        function restore(){
 
+            video.currentTime = currentTime;
 
 
-case "2160":
+            if(isPlaying){
 
-source =
-"./videos/sample-2160.mp4";
+                video.play()
+                .catch(error=>{
+                    console.log(error);
+                });
 
-break;
+            }
 
 
+            video.removeEventListener(
+                "loadedmetadata",
+                restore
+            );
 
-default:
 
-return;
-
-
-}
-
-
-
-
-
-
-video.pause();
-
-
-
-video.src =
-source;
-
-
-
-video.load();
-
-
-
-
-
-
-video.onloadedmetadata =
-()=>{
-
-
-video.currentTime =
-currentTime;
-
-
-
-if(playing){
-
-
-video.play();
-
-
-}
-
-
-};
-
-
+        }
+    );
 
 }
 
