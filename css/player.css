@@ -421,3 +421,33 @@ h1 {
 
 
 }
+/* ==========================
+FULLSCREEN FINAL FIX
+========================== */
+
+
+.player-wrapper.fullscreen-active
+.player-controls,
+.player-wrapper.fullscreen-active
+.controls,
+.player-wrapper.fullscreen-active
+.subtitle-controls {
+
+
+    display:none !important;
+
+
+}
+
+
+
+.player-wrapper.fullscreen-active
+#subtitleContainer {
+
+
+    display:block;
+
+    z-index:999;
+
+
+}
