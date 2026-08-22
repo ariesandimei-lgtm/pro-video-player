@@ -521,3 +521,89 @@ function showControl(){
 
 
 }
+// ==========================
+// QUALITY SELECTOR V3.5
+// ==========================
+
+
+function changeQuality(quality){
+
+
+    const video =
+    document.getElementById(
+        "videoPlayer"
+    );
+
+
+    const currentTime =
+    video.currentTime;
+
+
+    const isPlaying =
+    !video.paused;
+
+
+
+    let source = "";
+
+
+
+    if(quality === "720"){
+
+        source =
+        "videos/sample-720.mp4";
+
+    }
+
+
+
+    if(quality === "1080"){
+
+        source =
+        "videos/sample-1080.mp4";
+
+    }
+
+
+
+    if(quality === "1440"){
+
+        source =
+        "videos/sample-1440.mp4";
+
+    }
+
+
+
+    if(quality === "2160"){
+
+        source =
+        "videos/sample-2160.mp4";
+
+    }
+
+
+
+
+
+    video.src = source;
+
+
+    video.load();
+
+
+
+    video.currentTime =
+    currentTime;
+
+
+
+    if(isPlaying){
+
+        video.play();
+
+    }
+
+
+
+}
