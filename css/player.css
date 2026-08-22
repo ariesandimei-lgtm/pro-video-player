@@ -451,3 +451,63 @@ FULLSCREEN FINAL FIX
 
 
 }
+/* ==========================
+   V3.4.3 FULLSCREEN CLEAN
+========================== */
+
+
+/* video benar-benar memenuhi layar */
+
+.player-wrapper:fullscreen {
+
+    width:100vw !important;
+
+    height:100vh !important;
+
+    background:black;
+
+}
+
+
+
+/* sembunyikan SEMUA kontrol fullscreen */
+
+.player-wrapper:fullscreen .player-controls,
+.player-wrapper:fullscreen .controls,
+.player-wrapper:fullscreen .subtitle-controls {
+
+    display:none !important;
+
+}
+
+
+
+/* video penuh */
+
+.player-wrapper:fullscreen video {
+
+    width:100vw !important;
+
+    height:100vh !important;
+
+    object-fit:contain;
+
+}
+
+
+
+/* subtitle tetap hidup */
+
+.player-wrapper:fullscreen #subtitleContainer {
+
+    position:absolute;
+
+    bottom:80px;
+
+    width:80%;
+
+    left:10%;
+
+    z-index:999;
+
+}
