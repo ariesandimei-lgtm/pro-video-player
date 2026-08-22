@@ -300,3 +300,49 @@ MOBILE
     }
 
 }
+/* =========================
+   V3.4.1 FULLSCREEN SAFE
+========================= */
+
+
+.player-wrapper:fullscreen {
+
+    width:100vw;
+
+    height:100vh;
+
+    background:black;
+
+}
+
+
+
+/* video fullscreen */
+
+.player-wrapper:fullscreen video {
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+}
+
+
+
+/* subtitle tetap terlihat */
+
+.player-wrapper:fullscreen #subtitleContainer {
+
+    position:absolute;
+
+    bottom:80px;
+
+    left:10%;
+
+    width:80%;
+
+    z-index:10;
+
+}
