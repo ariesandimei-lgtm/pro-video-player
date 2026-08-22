@@ -628,3 +628,110 @@ function showControls(){
 
 
 }
+// ==========================
+// V3.4.6 FULLSCREEN TOUCH CONTROL
+// ==========================
+
+
+let controlTimer;
+
+
+
+document.addEventListener(
+"fullscreenchange",
+()=>{
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    if(document.fullscreenElement){
+
+
+        player.classList.add(
+            "hide-control"
+        );
+
+
+        player.addEventListener(
+            "click",
+            showFullscreenControls
+        );
+
+
+    }
+
+    else {
+
+
+        player.classList.remove(
+            "hide-control"
+        );
+
+
+        player.classList.remove(
+            "show-control"
+        );
+
+
+    }
+
+
+});
+
+
+
+
+
+
+function showFullscreenControls(){
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+
+    player.classList.remove(
+        "hide-control"
+    );
+
+
+    player.classList.add(
+        "show-control"
+    );
+
+
+
+    clearTimeout(
+        controlTimer
+    );
+
+
+
+    controlTimer =
+    setTimeout(
+        ()=>{
+
+
+            player.classList.remove(
+                "show-control"
+            );
+
+
+            player.classList.add(
+                "hide-control"
+            );
+
+
+        },
+        3000
+    );
+
+
+}
