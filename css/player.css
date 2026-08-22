@@ -511,3 +511,75 @@ FULLSCREEN FINAL FIX
     z-index:999;
 
 }
+/* ==========================
+   V3.4.4 FULLSCREEN FIX
+========================== */
+
+
+/* container fullscreen */
+
+.player-wrapper:fullscreen {
+
+    width:100vw !important;
+
+    height:100vh !important;
+
+    max-width:none !important;
+
+    margin:0 !important;
+
+    padding:0 !important;
+
+    display:block !important;
+
+    background:black;
+
+    overflow:hidden;
+
+}
+
+
+
+/* video penuh layar */
+
+.player-wrapper:fullscreen video {
+
+    width:100vw !important;
+
+    height:100vh !important;
+
+    max-width:none !important;
+
+    object-fit:cover !important;
+
+}
+
+
+
+/* hilangkan semua tombol */
+
+.player-wrapper:fullscreen .player-controls,
+.player-wrapper:fullscreen .controls,
+.player-wrapper:fullscreen .subtitle-controls {
+
+    display:none !important;
+
+}
+
+
+
+/* subtitle tetap */
+
+.player-wrapper:fullscreen #subtitleContainer {
+
+    position:absolute;
+
+    bottom:80px;
+
+    left:10%;
+
+    width:80%;
+
+    z-index:999;
+
+}
