@@ -1,6 +1,6 @@
 // ==========================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.5
+// PLAYER.JS V3.5.1
 // ==========================
 
 
@@ -8,157 +8,143 @@ let video;
 let progressBar;
 let volumeControl;
 
-let controlTimer;
-
 
 
 document.addEventListener(
 "DOMContentLoaded",
-async ()=>{
+async()=>{
 
 
-    video =
-    document.getElementById(
-        "videoPlayer"
-    );
+video =
+document.getElementById(
+"videoPlayer"
+);
 
 
-    const subtitleContainer =
-    document.getElementById(
-        "subtitleContainer"
-    );
 
+const subtitleContainer =
+document.getElementById(
+"subtitleContainer"
+);
 
-    const subtitleStatus =
-    document.getElementById(
-        "subtitleStatus"
-    );
 
 
+const subtitleStatus =
+document.getElementById(
+"subtitleStatus"
+);
 
-    // ==========================
-    // SUBTITLE ENGINE
-    // ==========================
 
 
-    const subtitleEngine =
-    new SubtitleEngine(
-        video,
-        subtitleContainer
-    );
+// SUBTITLE
 
+const subtitleEngine =
+new SubtitleEngine(
+video,
+subtitleContainer
+);
 
 
-    const loaded =
-    await subtitleEngine.load(
-        "./subtitles/indonesia.json"
-    );
 
+const loaded =
+await subtitleEngine.load(
+"./subtitles/indonesia.json"
+);
 
 
-    if(loaded){
 
-        subtitleStatus.textContent =
-        "Aktif";
+if(loaded){
 
-        subtitleEngine.start();
+subtitleStatus.textContent =
+"Aktif";
 
-    }
+subtitleEngine.start();
 
-    else{
+}
 
-        subtitleStatus.textContent =
-        "Gagal";
+else{
 
-    }
+subtitleStatus.textContent =
+"Gagal";
 
+}
 
 
-    window.subtitleEngine =
-    subtitleEngine;
 
+window.subtitleEngine =
+subtitleEngine;
 
 
-    // ==========================
-    // CONTROL
-    // ==========================
 
+// CONTROL
 
-    progressBar =
-    document.getElementById(
-        "progressBar"
-    );
 
+progressBar =
+document.getElementById(
+"progressBar"
+);
 
-    volumeControl =
-    document.getElementById(
-        "volumeControl"
-    );
 
+volumeControl =
+document.getElementById(
+"volumeControl"
+);
 
 
 
-    video.addEventListener(
-    "timeupdate",
-    ()=>{
 
 
-        if(video.duration){
+video.addEventListener(
+"timeupdate",
+()=>{
 
 
-            progressBar.value =
-            (video.currentTime /
-            video.duration) * 100;
+if(video.duration){
 
+progressBar.value =
+(video.currentTime /
+video.duration)*100;
 
-        }
+}
 
 
-    });
+});
 
 
 
 
 
-    progressBar.addEventListener(
-    "input",
-    ()=>{
+progressBar.addEventListener(
+"input",
+()=>{
 
 
-        if(video.duration){
+video.currentTime =
+(progressBar.value/100)
+*
+video.duration;
 
 
-            video.currentTime =
-            (progressBar.value/100)
-            *
-            video.duration;
+});
 
 
-        }
 
 
-    });
 
+volumeControl.addEventListener(
+"input",
+()=>{
 
 
+video.volume =
+volumeControl.value/100;
 
 
-    volumeControl.addEventListener(
-    "input",
-    ()=>{
+video.muted =
+video.volume===0;
 
 
-        video.volume =
-        volumeControl.value / 100;
-
-
-
-        video.muted =
-        video.volume === 0;
-
-
-    });
-
+});
 
 
 });
@@ -168,25 +154,24 @@ async ()=>{
 
 
 
-// ==========================
-// PLAY PAUSE
-// ==========================
 
+// PLAY
 
 function togglePlay(){
 
 
-    if(video.paused){
+if(video.paused){
 
-        video.play();
+video.play();
 
-    }
+}
 
-    else{
+else{
 
-        video.pause();
+video.pause();
 
-    }
+}
+
 
 }
 
@@ -194,16 +179,12 @@ function togglePlay(){
 
 
 
-
-// ==========================
 // SPEED
-// ==========================
-
 
 function changeSpeed(speed){
 
-    video.playbackRate =
-    speed;
+video.playbackRate =
+speed;
 
 }
 
@@ -212,15 +193,12 @@ function changeSpeed(speed){
 
 
 
-// ==========================
-// VOLUME
-// ==========================
-
+// MUTE
 
 function toggleMute(){
 
-    video.muted =
-    !video.muted;
+video.muted =
+!video.muted;
 
 }
 
@@ -230,14 +208,11 @@ function toggleMute(){
 
 
 
-// ==========================
 // SUBTITLE
-// ==========================
-
 
 function toggleSubtitle(){
 
-    window.subtitleEngine.toggle();
+window.subtitleEngine.toggle();
 
 }
 
@@ -246,45 +221,35 @@ function toggleSubtitle(){
 function subtitleSize(size){
 
 
-    const subtitle =
-    document.getElementById(
-        "subtitleContainer"
-    );
+let sub =
+document.getElementById(
+"subtitleContainer"
+);
 
 
-    if(size==="small"){
-
-        subtitle.style.fontSize =
-        "18px";
-
-    }
+if(size==="small")
+sub.style.fontSize="18px";
 
 
-    if(size==="medium"){
-
-        subtitle.style.fontSize =
-        "28px";
-
-    }
+if(size==="medium")
+sub.style.fontSize="28px";
 
 
-    if(size==="large"){
-
-        subtitle.style.fontSize =
-        "38px";
-
-    }
+if(size==="large")
+sub.style.fontSize="38px";
 
 
 }
+
+
 
 
 
 function subtitleDelay(value){
 
-    window.subtitleEngine.setDelay(
-        value
-    );
+window.subtitleEngine.setDelay(
+value
+);
 
 }
 
@@ -294,54 +259,11 @@ function subtitleDelay(value){
 
 
 
-// ==========================
+
 // FULLSCREEN
-// ==========================
 
 
 function fullscreenVideo(){
-
-
-    const player =
-    document.querySelector(
-        ".player-wrapper"
-    );
-
-
-
-    if(!document.fullscreenElement){
-
-
-        player.requestFullscreen();
-
-
-    }
-
-    else{
-
-
-        document.exitFullscreen();
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-// ==========================
-// FULLSCREEN AUTO HIDE
-// ==========================
-
-
-document.addEventListener(
-"fullscreenchange",
-()=>{
 
 
 const player =
@@ -351,13 +273,9 @@ document.querySelector(
 
 
 
-if(document.fullscreenElement){
+if(!document.fullscreenElement){
 
-
-    player.classList.add(
-        "hide-control"
-    );
-
+player.requestFullscreen();
 
 
 }
@@ -365,86 +283,13 @@ if(document.fullscreenElement){
 else{
 
 
-    player.classList.remove(
-        "hide-control"
-    );
-
-
-    player.classList.remove(
-        "show-control"
-    );
+document.exitFullscreen();
 
 
 }
 
 
-
-});
-
-
-
-
-
-
-document.querySelector(
-".player-wrapper"
-)
-.addEventListener(
-"click",
-()=>{
-
-
-const player =
-document.querySelector(
-".player-wrapper"
-);
-
-
-
-if(document.fullscreenElement){
-
-
-    player.classList.remove(
-        "hide-control"
-    );
-
-
-    player.classList.add(
-        "show-control"
-    );
-
-
-
-clearTimeout(controlTimer);
-
-
-
-controlTimer =
-setTimeout(
-()=>{
-
-
-player.classList.remove(
-"show-control"
-);
-
-
-player.classList.add(
-"hide-control"
-);
-
-
-},
-3000
-);
-
-
-
 }
-
-
-});
-
 
 
 
@@ -454,101 +299,87 @@ player.classList.add(
 
 
 // ==========================
-// QUALITY SELECTOR V3.5
+// QUALITY SWITCH
 // ==========================
 
 
-function changeQuality(quality){
+function changeQuality(q){
 
 
-    const currentTime =
-    video.currentTime;
+let current =
+video.currentTime;
 
 
-    const isPlaying =
-    !video.paused;
-
-
-
-    let source = "";
+let playing =
+!video.paused;
 
 
 
-    switch(quality){
-
-
-        case "720":
-
-            source =
-            "video/sample-720.mp4";
-
-        break;
+let source;
 
 
 
-        case "1080":
-
-            source =
-            "video/sample-1080.mp4";
-
-        break;
+switch(q){
 
 
+case "720":
 
-        case "1440":
+source =
+"videos/sample-720.mp4";
 
-            source =
-            "video/sample-1440.mp4";
-
-        break;
+break;
 
 
 
-        case "2160":
+case "1080":
 
-            source =
-            "video/sample-2160.mp4";
+source =
+"videos/sample-1080.mp4";
 
-        break;
-
-
-        default:
-
-            source =
-            "video/sample.mp4";
-
-    }
+break;
 
 
 
+case "1440":
 
+source =
+"videos/sample-1440.mp4";
 
-    video.src =
-    source;
-
-
-
-    video.load();
-
-
-
-    video.currentTime =
-    currentTime;
+break;
 
 
 
-    if(isPlaying){
+case "2160":
+
+source =
+"videos/sample-2160.mp4";
+
+break;
 
 
-        video.play()
-        .catch(
-        error=>{
-            console.log(error);
-        });
+}
 
 
-    }
 
+video.src =
+source;
+
+
+
+video.load();
+
+
+
+video.currentTime =
+current;
+
+
+
+if(playing){
+
+video.play();
+
+}
 
 
 }
