@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PRO Video Player V3.5</title>
+<title>PRO Video Player TEST</title>
 
 
 <link rel="stylesheet" href="css/player.css">
@@ -21,16 +21,14 @@
 <main class="app">
 
 
-<h1 class="app-title">
+<h1>
 PRO VIDEO PLAYER
 </h1>
 
 
-<p class="app-subtitle">
-Smart Indonesian Subtitle Engine
+<p>
+Video Test Mode
 </p>
-
-
 
 
 
@@ -38,198 +36,33 @@ Smart Indonesian Subtitle Engine
 
 
 
-<!-- VIDEO -->
-
 <video
 id="videoPlayer"
+controls
 playsinline
 preload="auto"
+width="100%"
 >
+
 
 <source
 src="./videos/sample.mp4"
 type="video/mp4"
 >
 
+
 Browser tidak mendukung video HTML5.
+
 
 </video>
 
 
 
-
-
-<!-- CONTROL UTAMA -->
-
-<div class="player-controls">
-
-
-<button onclick="togglePlay()">
-▶ / ⏸
-</button>
-
-
-<input
-id="progressBar"
-type="range"
-min="0"
-max="100"
-value="0"
->
-
-
-<button onclick="toggleMute()">
-🔊
-</button>
-
-
-<input
-id="volumeControl"
-type="range"
-min="0"
-max="100"
-value="100"
->
-
-
-<button onclick="fullscreenVideo()">
-⛶
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- QUALITY -->
-
-<div class="quality-controls">
-
-
-<button onclick="changeQuality('720')">
-720p
-</button>
-
-
-<button onclick="changeQuality('1080')">
-1080p
-</button>
-
-
-<button onclick="changeQuality('1440')">
-1440p
-</button>
-
-
-<button onclick="changeQuality('2160')">
-4K
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- SPEED -->
-
-<div class="controls">
-
-
-<button onclick="changeSpeed(0.5)">
-0.5x
-</button>
-
-
-<button onclick="changeSpeed(1)">
-1x
-</button>
-
-
-<button onclick="changeSpeed(1.5)">
-1.5x
-</button>
-
-
-<button onclick="changeSpeed(2)">
-2x
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- SUBTITLE -->
-
-<div class="subtitle-controls">
-
-
-<button onclick="toggleSubtitle()">
-Subtitle ON/OFF
-</button>
-
-
-<button onclick="subtitleSize('small')">
-Small
-</button>
-
-
-<button onclick="subtitleSize('medium')">
-Medium
-</button>
-
-
-<button onclick="subtitleSize('large')">
-Large
-</button>
-
-
-<button onclick="subtitleDelay(-0.5)">
--500ms
-</button>
-
-
-<button onclick="subtitleDelay(0)">
-0ms
-</button>
-
-
-<button onclick="subtitleDelay(0.5)">
-+500ms
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- SUBTITLE DISPLAY -->
-
-
 <div
 id="subtitleContainer"
-class="subtitle-container"
-aria-live="polite">
+class="subtitle-container">
 
 </div>
-
-
 
 
 
@@ -239,19 +72,15 @@ aria-live="polite">
 
 
 
-
-
-
-<!-- STATUS -->
-
-
 <div class="status-panel">
 
 
 Subtitle:
 
 <strong id="subtitleStatus">
+
 Memuat...
+
 </strong>
 
 
@@ -263,10 +92,14 @@ Memuat...
 
 
 
-
 <script src="js/subtitle-engine.js"></script>
 
+
+<!-- MATIKAN SEMENTARA PLAYER.JS -->
+
+<!--
 <script src="js/player.js"></script>
+-->
 
 
 
