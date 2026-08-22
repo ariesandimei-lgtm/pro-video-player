@@ -1,5 +1,11 @@
 let video;
+
+let progressBar;
+
+let volumeControl;
+
 let subtitleContainer;
+
 
 
 document.addEventListener(
@@ -17,6 +23,7 @@ subtitleContainer =
 document.getElementById(
 "subtitleContainer"
 );
+
 
 
 const subtitleStatus =
@@ -63,29 +70,111 @@ window.subtitleEngine =
 subtitleEngine;
 
 
+
+
+progressBar =
+document.getElementById(
+"progressBar"
+);
+
+
+volumeControl =
+document.getElementById(
+"volumeControl"
+);
+
+
+
+
+
+/* PROGRESS BAR */
+
+
+if(progressBar){
+
+
+video.addEventListener(
+"timeupdate",
+()=>{
+
+
+if(video.duration){
+
+
+progressBar.value =
+(video.currentTime /
+video.duration)
+*100;
+
+
+}
+
+
+}
+);
+
+
+
+progressBar.addEventListener(
+"input",
+()=>{
+
+
+if(video.duration){
+
+
+video.currentTime =
+(progressBar.value/100)
+*
+video.duration;
+
+
+}
+
+
+}
+);
+
+
+}
+
+
+
+
+
+/* VOLUME */
+
+
+if(volumeControl){
+
+
+volumeControl.addEventListener(
+"input",
+()=>{
+
+
+video.volume =
+volumeControl.value/100;
+
+
+}
+);
+
+
+}
+
+
+
 });
 
 
 
 
-function changeSpeed(speed){
-
-video.playbackRate =
-speed;
-
-}
-
-
-
-function toggleSubtitle(){
-
-window.subtitleEngine.toggle();
-
-}
 
 
 
 function togglePlay(){
+
 
 if(video.paused){
 
@@ -99,20 +188,58 @@ video.pause();
 
 }
 
+
 }
+
+
+
 
 
 
 function toggleMute(){
 
+
 video.muted =
 !video.muted;
+
 
 }
 
 
 
+
+
+
+function changeSpeed(speed){
+
+
+video.playbackRate =
+speed;
+
+
+}
+
+
+
+
+
+
+function toggleSubtitle(){
+
+
+window.subtitleEngine.toggle();
+
+
+}
+
+
+
+
+
+
 function subtitleSize(size){
+
+
 
 if(size=="small"){
 
@@ -134,19 +261,29 @@ subtitleContainer.style.fontSize="38px";
 
 }
 
+
 }
+
+
+
 
 
 
 function subtitleDelay(value){
 
+
 window.subtitleEngine.setDelay(value);
+
 
 }
 
 
 
+
+
+
 function fullscreenVideo(){
+
 
 const player =
 document.querySelector(
@@ -154,10 +291,12 @@ document.querySelector(
 );
 
 
+
 if(player.requestFullscreen){
 
 player.requestFullscreen();
 
 }
+
 
 }
