@@ -13,155 +13,167 @@ document.addEventListener(
 async ()=>{
 
 
-video =
-document.getElementById(
-"videoPlayer"
-);
+    video =
+    document.getElementById(
+        "videoPlayer"
+    );
 
 
-subtitleContainer =
-document.getElementById(
-"subtitleContainer"
-);
+    subtitleContainer =
+    document.getElementById(
+        "subtitleContainer"
+    );
 
 
+    const subtitleStatus =
+    document.getElementById(
+        "subtitleStatus"
+    );
 
-const subtitleStatus =
-document.getElementById(
-"subtitleStatus"
-);
 
 
+    const subtitleEngine =
+    new SubtitleEngine(
+        video,
+        subtitleContainer
+    );
 
-const subtitleEngine =
-new SubtitleEngine(
-video,
-subtitleContainer
-);
 
 
+    const loaded =
+    await subtitleEngine.load(
+        "./subtitles/indonesia.json"
+    );
 
-const loaded =
-await subtitleEngine.load(
-"./subtitles/indonesia.json"
-);
 
 
+    if(loaded){
 
-if(loaded){
 
-subtitleStatus.textContent =
-"Aktif";
+        if(subtitleStatus){
 
-subtitleEngine.start();
+            subtitleStatus.textContent =
+            "Aktif";
 
-}
+        }
 
-else{
 
-subtitleStatus.textContent =
-"Gagal";
+        subtitleEngine.start();
 
-}
 
+    }
 
+    else{
 
-window.subtitleEngine =
-subtitleEngine;
 
+        if(subtitleStatus){
 
+            subtitleStatus.textContent =
+            "Gagal";
 
+        }
 
-progressBar =
-document.getElementById(
-"progressBar"
-);
 
+    }
 
-volumeControl =
-document.getElementById(
-"volumeControl"
-);
 
 
+    window.subtitleEngine =
+    subtitleEngine;
 
 
 
-/* PROGRESS BAR */
 
 
-if(progressBar){
+    progressBar =
+    document.getElementById(
+        "progressBar"
+    );
 
 
-video.addEventListener(
-"timeupdate",
-()=>{
 
+    volumeControl =
+    document.getElementById(
+        "volumeControl"
+    );
 
-if(video.duration){
 
 
-progressBar.value =
-(video.currentTime /
-video.duration)
-*100;
 
 
-}
+    // PROGRESS BAR
 
 
-}
-);
+    if(progressBar){
 
 
+        video.addEventListener(
+        "timeupdate",
+        ()=>{
 
-progressBar.addEventListener(
-"input",
-()=>{
 
+            if(video.duration){
 
-if(video.duration){
 
+                progressBar.value =
+                (video.currentTime /
+                video.duration)
+                *100;
 
-video.currentTime =
-(progressBar.value/100)
-*
-video.duration;
 
+            }
 
-}
 
+        });
 
-}
-);
 
 
-}
+        progressBar.addEventListener(
+        "input",
+        ()=>{
 
 
+            if(video.duration){
 
 
+                video.currentTime =
+                (progressBar.value/100)
+                *
+                video.duration;
 
-/* VOLUME */
 
+            }
 
-if(volumeControl){
 
+        });
 
-volumeControl.addEventListener(
-"input",
-()=>{
 
+    }
 
-video.volume =
-volumeControl.value/100;
 
 
-}
-);
 
 
-}
+
+    // VOLUME
+
+
+    if(volumeControl){
+
+
+        volumeControl.addEventListener(
+        "input",
+        ()=>{
+
+
+            video.volume =
+            volumeControl.value / 100;
+
+
+        });
+
+
+    }
 
 
 
@@ -172,35 +184,42 @@ volumeControl.value/100;
 
 
 
+// PLAY / PAUSE
 
 function togglePlay(){
 
 
-if(video.paused){
+    if(video.paused){
 
-video.play();
+
+        video.play();
+
+
+    }
+
+    else{
+
+
+        video.pause();
+
+
+    }
+
 
 }
 
-else{
-
-video.pause();
-
-}
-
-
-}
 
 
 
 
 
+// MUTE
 
 function toggleMute(){
 
 
-video.muted =
-!video.muted;
+    video.muted =
+    !video.muted;
 
 
 }
@@ -209,12 +228,14 @@ video.muted =
 
 
 
+
+// SPEED
 
 function changeSpeed(speed){
 
 
-video.playbackRate =
-speed;
+    video.playbackRate =
+    speed;
 
 
 }
@@ -223,11 +244,17 @@ speed;
 
 
 
+
+// SUBTITLE ON / OFF
 
 function toggleSubtitle(){
 
 
-window.subtitleEngine.toggle();
+    if(window.subtitleEngine){
+
+        window.subtitleEngine.toggle();
+
+    }
 
 
 }
@@ -236,43 +263,66 @@ window.subtitleEngine.toggle();
 
 
 
+
+// UKURAN SUBTITLE
 
 function subtitleSize(size){
 
 
 
-if(size=="small"){
+    if(size=="small"){
 
-subtitleContainer.style.fontSize="18px";
+
+        subtitleContainer.style.fontSize =
+        "18px";
+
+
+    }
+
+
+
+    if(size=="medium"){
+
+
+        subtitleContainer.style.fontSize =
+        "28px";
+
+
+    }
+
+
+
+    if(size=="large"){
+
+
+        subtitleContainer.style.fontSize =
+        "38px";
+
+
+    }
+
 
 }
 
 
-if(size=="medium"){
-
-subtitleContainer.style.fontSize="28px";
-
-}
-
-
-if(size=="large"){
-
-subtitleContainer.style.fontSize="38px";
-
-}
-
-
-}
 
 
 
 
-
+// DELAY SUBTITLE
 
 function subtitleDelay(value){
 
 
-window.subtitleEngine.setDelay(value);
+    if(window.subtitleEngine){
+
+
+        window.subtitleEngine.setDelay(
+            value
+        );
+
+
+    }
 
 
 }
@@ -281,22 +331,59 @@ window.subtitleEngine.setDelay(value);
 
 
 
+
+
+// FULLSCREEN
 
 function fullscreenVideo(){
 
 
-const player =
-document.querySelector(
-".player-wrapper"
-);
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
 
 
 
-if(player.requestFullscreen){
+    if(!document.fullscreenElement){
 
-player.requestFullscreen();
 
-}
+
+        if(player.requestFullscreen){
+
+
+            player.requestFullscreen();
+
+
+        }
+
+
+        else if(player.webkitRequestFullscreen){
+
+
+            player.webkitRequestFullscreen();
+
+
+        }
+
+
+
+    }
+
+    else {
+
+
+
+        if(document.exitFullscreen){
+
+
+            document.exitFullscreen();
+
+
+        }
+
+
+    }
 
 
 }
