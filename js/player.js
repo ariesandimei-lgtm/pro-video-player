@@ -1,6 +1,6 @@
 // ==========================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.5 FIX
+// PLAYER.JS V3.5.1 FIX
 // ==========================
 
 
@@ -13,13 +13,13 @@ let controlTimer;
 
 
 // ==========================
-// INIT
+// START
 // ==========================
 
 
 document.addEventListener(
 "DOMContentLoaded",
-async ()=>{
+async()=>{
 
 
     video =
@@ -44,12 +44,13 @@ async ()=>{
 
 
 
+
     // ======================
     // SUBTITLE ENGINE
     // ======================
 
 
-    const subtitleContainer =
+    const subtitleBox =
     document.getElementById(
         "subtitleContainer"
     );
@@ -62,18 +63,19 @@ async ()=>{
 
 
 
-    if(typeof SubtitleEngine !== "undefined"){
+    if(
+        typeof SubtitleEngine !== "undefined"
+    ){
 
-
-        const subtitleEngine =
+        let subtitleEngine =
         new SubtitleEngine(
             video,
-            subtitleContainer
+            subtitleBox
         );
 
 
 
-        const loaded =
+        let loaded =
         await subtitleEngine.load(
             "./subtitles/indonesia.json"
         );
@@ -83,7 +85,7 @@ async ()=>{
         if(loaded){
 
 
-            subtitleStatus.textContent =
+            subtitleStatus.innerHTML =
             "Aktif";
 
 
@@ -91,11 +93,10 @@ async ()=>{
 
 
         }
-
         else{
 
 
-            subtitleStatus.textContent =
+            subtitleStatus.innerHTML =
             "Gagal";
 
 
@@ -111,8 +112,10 @@ async ()=>{
 
 
 
+
+
     // ======================
-    // PROGRESS
+    // TIME BAR
     // ======================
 
 
@@ -128,13 +131,16 @@ async ()=>{
             (
                 video.currentTime /
                 video.duration
-            ) * 100;
+            )
+            *
+            100;
 
 
         }
 
 
     });
+
 
 
 
@@ -179,7 +185,6 @@ async ()=>{
         volumeControl.value / 100;
 
 
-
         video.muted =
         video.volume === 0;
 
@@ -189,6 +194,9 @@ async ()=>{
 
 
 });
+
+
+
 
 
 
@@ -216,7 +224,6 @@ function togglePlay(){
 
 
     }
-
     else{
 
 
@@ -227,6 +234,8 @@ function togglePlay(){
 
 
 }
+
+
 
 
 
@@ -258,6 +267,8 @@ function changeSpeed(speed){
 
 
 
+
+
 // ==========================
 // MUTE
 // ==========================
@@ -266,15 +277,13 @@ function changeSpeed(speed){
 function toggleMute(){
 
 
-    if(video){
-
-        video.muted =
-        !video.muted;
-
-    }
+    video.muted =
+    !video.muted;
 
 
 }
+
+
 
 
 
@@ -301,46 +310,37 @@ function toggleSubtitle(){
 
 
 
-
 function subtitleSize(size){
 
 
-    const subtitle =
+    let sub =
     document.getElementById(
         "subtitleContainer"
     );
 
 
-    if(!subtitle)
+
+    if(!sub)
     return;
 
 
 
-    if(size==="small"){
-
-        subtitle.style.fontSize =
-        "18px";
-
-    }
+    if(size==="small")
+    sub.style.fontSize="18px";
 
 
-    if(size==="medium"){
 
-        subtitle.style.fontSize =
-        "28px";
-
-    }
+    if(size==="medium")
+    sub.style.fontSize="28px";
 
 
-    if(size==="large"){
 
-        subtitle.style.fontSize =
-        "38px";
-
-    }
+    if(size==="large")
+    sub.style.fontSize="38px";
 
 
 }
+
 
 
 
@@ -367,8 +367,9 @@ function subtitleDelay(value){
 
 
 
+
 // ==========================
-// QUALITY SWITCH V3.5 FIX
+// QUALITY SWITCH FIX
 // ==========================
 
 
@@ -380,7 +381,7 @@ function changeQuality(quality){
 
 
 
-    let currentTime =
+    let time =
     video.currentTime;
 
 
@@ -395,7 +396,7 @@ function changeQuality(quality){
 
 
 
-    let source = "";
+    let src="";
 
 
 
@@ -404,8 +405,8 @@ function changeQuality(quality){
 
         case "720":
 
-            source =
-            "videos/sample-720.mp4";
+        src =
+        "videos/sample-720.mp4";
 
         break;
 
@@ -413,8 +414,8 @@ function changeQuality(quality){
 
         case "1080":
 
-            source =
-            "videos/sample-1080.mp4";
+        src =
+        "videos/sample-1080.mp4";
 
         break;
 
@@ -422,8 +423,8 @@ function changeQuality(quality){
 
         case "1440":
 
-            source =
-            "videos/sample-1440.mp4";
+        src =
+        "videos/sample-1440.mp4";
 
         break;
 
@@ -431,8 +432,8 @@ function changeQuality(quality){
 
         case "2160":
 
-            source =
-            "videos/sample-2160.mp4";
+        src =
+        "videos/sample-2160.mp4";
 
         break;
 
@@ -440,12 +441,17 @@ function changeQuality(quality){
 
         default:
 
-            return;
+        return;
 
 
     }
 
 
+
+    console.log(
+        "QUALITY:",
+        src
+    );
 
 
 
@@ -454,11 +460,12 @@ function changeQuality(quality){
 
 
     video.src =
-    source;
+    src;
 
 
 
     video.load();
+
 
 
 
@@ -469,7 +476,7 @@ function changeQuality(quality){
 
         video.currentTime =
         Math.min(
-            currentTime,
+            time,
             video.duration
         );
 
@@ -484,7 +491,9 @@ function changeQuality(quality){
 
 
             video.play()
-            .catch(()=>{});
+            .catch(
+                e=>console.log(e)
+            );
 
 
         }
@@ -494,7 +503,10 @@ function changeQuality(quality){
     };
 
 
+
 }
+
+
 
 
 
@@ -510,7 +522,7 @@ function changeQuality(quality){
 function fullscreenVideo(){
 
 
-    const player =
+    let player =
     document.querySelector(
         ".player-wrapper"
     );
@@ -520,16 +532,7 @@ function fullscreenVideo(){
     if(!document.fullscreenElement){
 
 
-        player.requestFullscreen()
-        .then(()=>{
-
-
-            player.classList.add(
-                "hide-control"
-            );
-
-
-        });
+        player.requestFullscreen();
 
 
     }
@@ -563,15 +566,10 @@ document.addEventListener(
 ()=>{
 
 
-    const player =
+    let player =
     document.querySelector(
         ".player-wrapper"
     );
-
-
-
-    if(!player)
-    return;
 
 
 
@@ -583,15 +581,81 @@ document.addEventListener(
         );
 
 
+
         player.onclick =
         showFullscreenControls;
 
+
+    }
+    else{
+
+
+        player.classList.remove(
+            "hide-control"
+        );
+
+
+        player.classList.remove(
+            "show-control"
+        );
 
 
     }
 
 
-    else{
+});
 
 
-        player
+
+
+
+
+
+function showFullscreenControls(){
+
+
+    let player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+
+    player.classList.remove(
+        "hide-control"
+    );
+
+
+    player.classList.add(
+        "show-control"
+    );
+
+
+
+    clearTimeout(
+        controlTimer
+    );
+
+
+
+    controlTimer =
+    setTimeout(
+    ()=>{
+
+
+        player.classList.remove(
+            "show-control"
+        );
+
+
+        player.classList.add(
+            "hide-control"
+        );
+
+
+    },
+    3000
+    );
+
+
+}
