@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PRO Video Player</title>
+<title>PRO Video Player V3.5</title>
 
 
 <link 
@@ -35,7 +35,10 @@ Smart Indonesian Subtitle Engine
 
 
 
+
+
 <section class="player-wrapper">
+
 
 
 <!-- VIDEO -->
@@ -57,14 +60,22 @@ Browser tidak mendukung video HTML5.
 
 
 
+
+
+
+
 <!-- KONTROL UTAMA -->
+
 
 <div class="player-controls">
 
 
 <button onclick="togglePlay()">
+
 ▶ / ⏸
+
 </button>
+
 
 
 <input
@@ -76,9 +87,13 @@ max="100"
 >
 
 
+
 <button onclick="toggleMute()">
+
 🔊
+
 </button>
+
 
 
 <input
@@ -90,12 +105,68 @@ max="100"
 >
 
 
+
 <button onclick="fullscreenVideo()">
+
 ⛶
+
 </button>
 
 
+
 </div>
+
+
+
+
+
+
+
+
+
+<!-- QUALITY CONTROL V3.5 -->
+
+
+<div class="quality-controls">
+
+
+<button onclick="changeQuality('720')">
+
+720p
+
+</button>
+
+
+
+<button onclick="changeQuality('1080')">
+
+1080p
+
+</button>
+
+
+
+<button onclick="changeQuality('1440')">
+
+1440p
+
+</button>
+
+
+
+<button onclick="changeQuality('2160')">
+
+4K
+
+</button>
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -108,26 +179,41 @@ max="100"
 
 
 <button onclick="changeSpeed(0.5)">
+
 0.5x
+
 </button>
+
 
 
 <button onclick="changeSpeed(1)">
+
 1x
+
 </button>
+
 
 
 <button onclick="changeSpeed(1.5)">
+
 1.5x
+
 </button>
 
 
+
 <button onclick="changeSpeed(2)">
+
 2x
+
 </button>
 
 
 </div>
+
+
+
+
 
 
 
@@ -140,48 +226,76 @@ max="100"
 
 
 <button onclick="toggleSubtitle()">
+
 Subtitle ON/OFF
+
 </button>
+
 
 
 
 <button onclick="subtitleSize('small')">
+
 Small
+
 </button>
+
 
 
 
 <button onclick="subtitleSize('medium')">
+
 Medium
+
 </button>
+
 
 
 
 <button onclick="subtitleSize('large')">
+
 Large
+
 </button>
+
+
 
 
 
 <button onclick="subtitleDelay(-0.5)">
+
 -500ms
+
 </button>
+
+
 
 
 
 <button onclick="subtitleDelay(0)">
+
 0ms
+
 </button>
 
 
 
+
+
 <button onclick="subtitleDelay(0.5)">
+
 +500ms
+
 </button>
 
 
 
 </div>
+
+
+
+
+
 
 
 
@@ -194,11 +308,19 @@ Large
 id="subtitleContainer"
 class="subtitle-container"
 aria-live="polite"
-></div>
+>
+
+</div>
+
+
 
 
 
 </section>
+
+
+
+
 
 
 
@@ -215,8 +337,11 @@ aria-live="polite"
 Subtitle:
 
 <strong id="subtitleStatus">
+
 Memuat...
+
 </strong>
+
 
 </span>
 
@@ -226,18 +351,19 @@ Memuat...
 
 
 
-</main>
+
+
 
 
 
 <script src="js/subtitle-engine.js"></script>
-<script>
-console.log("INDEX BERHASIL");
-</script>
+
+
 <script src="js/player.js"></script>
 
 
 
 </body>
+
 
 </html>
