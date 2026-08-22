@@ -37,24 +37,21 @@ Smart Indonesian Subtitle Engine
 <section class="player-wrapper">
 
 
+
 <!-- VIDEO -->
 
 <video
 id="videoPlayer"
-controls
 playsinline
 preload="auto"
 >
-
 
 <source
 src="./videos/sample.mp4"
 type="video/mp4"
 >
 
-
 Browser tidak mendukung video HTML5.
-
 
 </video>
 
@@ -62,20 +59,14 @@ Browser tidak mendukung video HTML5.
 
 
 
-
-
-
-<!-- CONTROL -->
+<!-- CONTROL UTAMA -->
 
 <div class="player-controls">
 
 
 <button onclick="togglePlay()">
-
 ▶ / ⏸
-
 </button>
-
 
 
 <input
@@ -87,15 +78,9 @@ value="0"
 >
 
 
-
-
 <button onclick="toggleMute()">
-
 🔊
-
 </button>
-
-
 
 
 <input
@@ -107,14 +92,9 @@ value="100"
 >
 
 
-
-
 <button onclick="fullscreenVideo()">
-
 ⛶
-
 </button>
-
 
 
 </div>
@@ -125,10 +105,7 @@ value="100"
 
 
 
-
-
 <!-- QUALITY -->
-
 
 <div class="quality-controls">
 
@@ -153,7 +130,6 @@ value="100"
 </button>
 
 
-
 </div>
 
 
@@ -162,10 +138,7 @@ value="100"
 
 
 
-
-
 <!-- SPEED -->
-
 
 <div class="controls">
 
@@ -190,10 +163,7 @@ value="100"
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -203,69 +173,45 @@ value="100"
 
 <!-- SUBTITLE -->
 
-
 <div class="subtitle-controls">
 
 
 <button onclick="toggleSubtitle()">
-
 Subtitle ON/OFF
-
 </button>
-
 
 
 <button onclick="subtitleSize('small')">
-
 Small
-
 </button>
-
 
 
 <button onclick="subtitleSize('medium')">
-
 Medium
-
 </button>
-
 
 
 <button onclick="subtitleSize('large')">
-
 Large
-
 </button>
-
 
 
 <button onclick="subtitleDelay(-0.5)">
-
 -500ms
-
 </button>
-
 
 
 <button onclick="subtitleDelay(0)">
-
 0ms
-
 </button>
-
 
 
 <button onclick="subtitleDelay(0.5)">
-
 +500ms
-
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -279,7 +225,7 @@ Large
 <div
 id="subtitleContainer"
 class="subtitle-container"
->
+aria-live="polite">
 
 </div>
 
@@ -296,15 +242,16 @@ class="subtitle-container"
 
 
 
+<!-- STATUS -->
+
+
 <div class="status-panel">
 
 
 Subtitle:
 
 <strong id="subtitleStatus">
-
 Memuat...
-
 </strong>
 
 
@@ -316,9 +263,11 @@ Memuat...
 
 
 
+
 <script src="js/subtitle-engine.js"></script>
 
 <script src="js/player.js"></script>
+
 
 
 </body>
