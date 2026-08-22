@@ -1,23 +1,44 @@
-// ==========================
+// ===================================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.5.1
-// ==========================
+// PLAYER.JS V3.5.2
+// ===================================
 
 
 let video;
 let progressBar;
 let volumeControl;
 
+let controlTimer;
+
+
+
+// ===================================
+// INITIALIZE
+// ===================================
 
 
 document.addEventListener(
 "DOMContentLoaded",
-async()=>{
+async ()=>{
 
 
 video =
 document.getElementById(
 "videoPlayer"
+);
+
+
+
+progressBar =
+document.getElementById(
+"progressBar"
+);
+
+
+
+volumeControl =
+document.getElementById(
+"volumeControl"
 );
 
 
@@ -36,7 +57,13 @@ document.getElementById(
 
 
 
-// SUBTITLE
+// ===============================
+// SUBTITLE ENGINE
+// ===============================
+
+
+if(typeof SubtitleEngine !== "undefined"){
+
 
 const subtitleEngine =
 new SubtitleEngine(
@@ -55,17 +82,22 @@ await subtitleEngine.load(
 
 if(loaded){
 
-subtitleStatus.textContent =
+
+subtitleStatus.innerHTML =
 "Aktif";
 
+
 subtitleEngine.start();
+
 
 }
 
 else{
 
-subtitleStatus.textContent =
+
+subtitleStatus.innerHTML =
 "Gagal";
+
 
 }
 
@@ -75,23 +107,16 @@ window.subtitleEngine =
 subtitleEngine;
 
 
-
-// CONTROL
-
-
-progressBar =
-document.getElementById(
-"progressBar"
-);
-
-
-volumeControl =
-document.getElementById(
-"volumeControl"
-);
+}
 
 
 
+
+
+
+// ===============================
+// VIDEO PROGRESS
+// ===============================
 
 
 video.addEventListener(
@@ -101,14 +126,19 @@ video.addEventListener(
 
 if(video.duration){
 
+
 progressBar.value =
 (video.currentTime /
-video.duration)*100;
+video.duration) * 100;
+
 
 }
 
 
+
 });
+
+
 
 
 
@@ -119,16 +149,29 @@ progressBar.addEventListener(
 ()=>{
 
 
+if(video.duration){
+
+
 video.currentTime =
-(progressBar.value/100)
+(progressBar.value / 100)
 *
 video.duration;
+
+
+}
 
 
 });
 
 
 
+
+
+
+
+// ===============================
+// VOLUME
+// ===============================
 
 
 volumeControl.addEventListener(
@@ -137,16 +180,19 @@ volumeControl.addEventListener(
 
 
 video.volume =
-volumeControl.value/100;
+volumeControl.value / 100;
+
 
 
 video.muted =
-video.volume===0;
+video.volume === 0;
+
 
 
 });
 
 
+
 });
 
 
@@ -155,36 +201,31 @@ video.volume===0;
 
 
 
-// PLAY
+
+// ===================================
+// PLAY PAUSE
+// ===================================
+
 
 function togglePlay(){
 
 
 if(video.paused){
 
+
 video.play();
+
 
 }
 
 else{
 
+
 video.pause();
 
-}
-
 
 }
 
-
-
-
-
-// SPEED
-
-function changeSpeed(speed){
-
-video.playbackRate =
-speed;
 
 }
 
@@ -193,13 +234,20 @@ speed;
 
 
 
+
+
+// ===================================
 // MUTE
+// ===================================
+
 
 function toggleMute(){
+
 
 video.muted =
 !video.muted;
 
+
 }
 
 
@@ -208,13 +256,52 @@ video.muted =
 
 
 
+
+
+// ===================================
+// SPEED
+// ===================================
+
+
+function changeSpeed(speed){
+
+
+video.playbackRate =
+speed;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===================================
 // SUBTITLE
+// ===================================
+
 
 function toggleSubtitle(){
 
+
+if(window.subtitleEngine){
+
+
 window.subtitleEngine.toggle();
 
+
 }
+
+
+}
+
+
+
+
 
 
 
@@ -227,19 +314,40 @@ document.getElementById(
 );
 
 
-if(size==="small")
+
+if(size==="small"){
+
+
 sub.style.fontSize="18px";
 
 
-if(size==="medium")
+}
+
+
+
+if(size==="medium"){
+
+
 sub.style.fontSize="28px";
 
 
-if(size==="large")
+}
+
+
+
+if(size==="large"){
+
+
 sub.style.fontSize="38px";
 
 
 }
+
+
+}
+
+
+
 
 
 
@@ -247,9 +355,17 @@ sub.style.fontSize="38px";
 
 function subtitleDelay(value){
 
+
+if(window.subtitleEngine){
+
+
 window.subtitleEngine.setDelay(
 value
 );
+
+
+}
+
 
 }
 
@@ -260,7 +376,134 @@ value
 
 
 
+
+// ===================================
+// QUALITY SWITCH V3.5.2
+// ===================================
+
+
+function changeQuality(q){
+
+
+
+let currentTime =
+video.currentTime;
+
+
+
+let playing =
+!video.paused;
+
+
+
+let source = "";
+
+
+
+
+
+switch(q){
+
+
+case "720":
+
+source =
+"./videos/sample-720.mp4";
+
+break;
+
+
+
+case "1080":
+
+source =
+"./videos/sample-1080.mp4";
+
+break;
+
+
+
+case "1440":
+
+source =
+"./videos/sample-1440.mp4";
+
+break;
+
+
+
+case "2160":
+
+source =
+"./videos/sample-2160.mp4";
+
+break;
+
+
+
+default:
+
+return;
+
+
+}
+
+
+
+
+
+
+video.pause();
+
+
+
+video.src =
+source;
+
+
+
+video.load();
+
+
+
+
+
+
+video.onloadedmetadata =
+()=>{
+
+
+video.currentTime =
+currentTime;
+
+
+
+if(playing){
+
+
+video.play();
+
+
+}
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===================================
 // FULLSCREEN
+// ===================================
 
 
 function fullscreenVideo(){
@@ -275,7 +518,10 @@ document.querySelector(
 
 if(!document.fullscreenElement){
 
+
+
 player.requestFullscreen();
+
 
 
 }
@@ -298,88 +544,127 @@ document.exitFullscreen();
 
 
 
-// ==========================
-// QUALITY SWITCH
-// ==========================
+
+// ===================================
+// FULLSCREEN CONTROL
+// YOUTUBE STYLE
+// ===================================
 
 
-function changeQuality(q){
+document.addEventListener(
+"fullscreenchange",
+()=>{
 
 
-let current =
-video.currentTime;
-
-
-let playing =
-!video.paused;
-
-
-
-let source;
-
-
-
-switch(q){
-
-
-case "720":
-
-source =
-"videos/sample-720.mp4";
-
-break;
+const player =
+document.querySelector(
+".player-wrapper"
+);
 
 
 
-case "1080":
-
-source =
-"videos/sample-1080.mp4";
-
-break;
+if(document.fullscreenElement){
 
 
 
-case "1440":
-
-source =
-"videos/sample-1440.mp4";
-
-break;
+player.classList.add(
+"hide-control"
+);
 
 
 
-case "2160":
+player.onclick =
+showFullscreenControls;
 
-source =
-"videos/sample-2160.mp4";
 
-break;
+
+player.ontouchstart =
+showFullscreenControls;
+
+
+
+}
+
+else{
+
+
+player.classList.remove(
+"hide-control"
+);
+
+
+
+player.classList.remove(
+"show-control"
+);
+
 
 
 }
 
 
-
-video.src =
-source;
+});
 
 
 
-video.load();
 
 
 
-video.currentTime =
-current;
 
 
 
-if(playing){
+function showFullscreenControls(){
 
-video.play();
 
-}
+
+const player =
+document.querySelector(
+".player-wrapper"
+);
+
+
+
+player.classList.remove(
+"hide-control"
+);
+
+
+
+player.classList.add(
+"show-control"
+);
+
+
+
+
+clearTimeout(
+controlTimer
+);
+
+
+
+
+controlTimer =
+setTimeout(
+()=>{
+
+
+player.classList.remove(
+"show-control"
+);
+
+
+
+player.classList.add(
+"hide-control"
+);
+
+
+
+},
+3000
+);
+
 
 
 }
