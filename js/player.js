@@ -25,6 +25,7 @@ async ()=>{
     );
 
 
+
     const subtitleStatus =
     document.getElementById(
         "subtitleStatus"
@@ -101,7 +102,9 @@ async ()=>{
 
 
 
+    // ====================
     // PROGRESS BAR
+    // ====================
 
 
     if(progressBar){
@@ -155,7 +158,9 @@ async ()=>{
 
 
 
+    // ====================
     // VOLUME
+    // ====================
 
 
     if(volumeControl){
@@ -170,10 +175,24 @@ async ()=>{
             volumeControl.value / 100;
 
 
+            if(video.volume === 0){
+
+                video.muted = true;
+
+            }
+
+            else{
+
+                video.muted = false;
+
+            }
+
+
         });
 
 
     }
+
 
 
 
@@ -184,7 +203,11 @@ async ()=>{
 
 
 
-// PLAY / PAUSE
+
+// ====================
+// PLAY PAUSE
+// ====================
+
 
 function togglePlay(){
 
@@ -213,7 +236,12 @@ function togglePlay(){
 
 
 
+
+
+// ====================
 // MUTE
+// ====================
+
 
 function toggleMute(){
 
@@ -229,7 +257,12 @@ function toggleMute(){
 
 
 
+
+
+// ====================
 // SPEED
+// ====================
+
 
 function changeSpeed(speed){
 
@@ -245,14 +278,21 @@ function changeSpeed(speed){
 
 
 
-// SUBTITLE ON / OFF
+
+
+// ====================
+// SUBTITLE ON OFF
+// ====================
+
 
 function toggleSubtitle(){
 
 
     if(window.subtitleEngine){
 
+
         window.subtitleEngine.toggle();
+
 
     }
 
@@ -264,9 +304,22 @@ function toggleSubtitle(){
 
 
 
-// UKURAN SUBTITLE
+
+
+// ====================
+// SUBTITLE SIZE
+// ====================
+
 
 function subtitleSize(size){
+
+
+
+    if(!subtitleContainer){
+
+        return;
+
+    }
 
 
 
@@ -302,6 +355,7 @@ function subtitleSize(size){
     }
 
 
+
 }
 
 
@@ -309,7 +363,12 @@ function subtitleSize(size){
 
 
 
-// DELAY SUBTITLE
+
+
+// ====================
+// SUBTITLE DELAY
+// ====================
+
 
 function subtitleDelay(value){
 
@@ -333,7 +392,11 @@ function subtitleDelay(value){
 
 
 
-// FULLSCREEN
+
+// ====================
+// FULLSCREEN V3.4.2
+// ====================
+
 
 function fullscreenVideo(){
 
@@ -341,6 +404,12 @@ function fullscreenVideo(){
     const player =
     document.querySelector(
         ".player-wrapper"
+    );
+
+
+
+    player.classList.toggle(
+        "fullscreen-mode"
     );
 
 
@@ -357,7 +426,6 @@ function fullscreenVideo(){
 
         }
 
-
         else if(player.webkitRequestFullscreen){
 
 
@@ -370,8 +438,7 @@ function fullscreenVideo(){
 
     }
 
-    else {
-
+    else{
 
 
         if(document.exitFullscreen){
