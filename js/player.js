@@ -438,3 +438,87 @@ function fullscreenVideo(){
 
 
 }
+let hideTimer;
+
+
+document.addEventListener(
+"fullscreenchange",
+()=>{
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    if(document.fullscreenElement){
+
+
+        player.classList.add(
+            "hide-control"
+        );
+
+
+        player.addEventListener(
+            "click",
+            showFullscreenControl
+        );
+
+
+    }
+
+
+});
+
+
+
+
+
+function showFullscreenControl(){
+
+
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+    player.classList.remove(
+        "hide-control"
+    );
+
+
+    player.classList.add(
+        "show-control"
+    );
+
+
+
+    clearTimeout(
+        hideTimer
+    );
+
+
+
+    hideTimer =
+    setTimeout(
+        ()=>{
+
+
+            player.classList.remove(
+                "show-control"
+            );
+
+
+            player.classList.add(
+                "hide-control"
+            );
+
+
+        },
+        3000
+    );
+
+
+}
