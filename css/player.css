@@ -346,3 +346,73 @@ MOBILE
     z-index:10;
 
 }
+/* =========================
+V3.4.1 FULLSCREEN CONTROL FIX
+========================= */
+
+
+/* Tombol speed */
+
+.player-wrapper:fullscreen .controls {
+
+    position:absolute;
+
+    bottom:90px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:100;
+
+}
+
+
+
+/* Tombol subtitle */
+
+.player-wrapper:fullscreen .subtitle-controls {
+
+    position:absolute;
+
+    bottom:40px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:100;
+
+}
+
+
+
+/* Kontrol utama video */
+
+.player-wrapper:fullscreen .player-controls {
+
+    position:absolute;
+
+    bottom:10px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:90%;
+
+    z-index:100;
+
+}
+
+
+
+/* Subtitle tetap di atas video */
+
+.player-wrapper:fullscreen #subtitleContainer {
+
+    bottom:150px;
+
+    z-index:90;
+
+}
