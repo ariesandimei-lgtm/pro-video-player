@@ -1,3 +1,10 @@
+/* =========================
+   PRO VIDEO PLAYER CSS
+   V3.4.2 STABLE
+========================= */
+
+
+
 body {
 
     margin:0;
@@ -9,6 +16,9 @@ body {
     font-family:Arial, sans-serif;
 
 }
+
+
+
 
 
 .app {
@@ -25,13 +35,15 @@ body {
 
 
 
+
+
 .player-wrapper {
 
     position:relative;
 
-    background:black;
-
 }
+
+
 
 
 
@@ -41,15 +53,15 @@ video {
 
     background:black;
 
-    display:block;
-
 }
 
 
 
-/* =====================
-SUBTITLE ENGINE DISPLAY
-===================== */
+
+
+/* =========================
+   SUBTITLE
+========================= */
 
 
 #subtitleContainer {
@@ -74,11 +86,15 @@ SUBTITLE ENGINE DISPLAY
 
     word-wrap:break-word;
 
-    text-shadow:2px 2px 5px black;
+    text-shadow:
 
-    z-index:10;
+    2px 2px 5px black;
+
+    z-index:20;
 
 }
+
+
 
 
 
@@ -92,9 +108,11 @@ SUBTITLE ENGINE DISPLAY
 
 
 
-/* =====================
-CONTROL
-===================== */
+
+
+/* =========================
+   PLAYER CONTROL
+========================= */
 
 
 .player-controls {
@@ -111,9 +129,9 @@ CONTROL
 
 
 
-.player-controls button,
-.controls button,
-.subtitle-controls button {
+
+
+.player-controls button {
 
     background:#222;
 
@@ -129,12 +147,33 @@ CONTROL
 
 
 
+
+
 .player-controls input {
 
     flex:1;
 
 }
 
+
+
+
+
+.player-controls input[type="range"] {
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SPEED CONTROL
+========================= */
 
 
 .controls {
@@ -151,7 +190,37 @@ CONTROL
 
 
 
+
+
+.controls button {
+
+
+    background:#222;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SUBTITLE CONTROL
+========================= */
+
+
 .subtitle-controls {
+
 
     display:flex;
 
@@ -163,163 +232,64 @@ CONTROL
 
     margin-top:10px;
 
-}
-
-
-
-/* =====================
-FULLSCREEN
-===================== */
-
-
-.player-wrapper:fullscreen {
-
-    width:100vw;
-
-    height:100vh;
-
-    background:black;
-
-    position:relative;
 
 }
 
 
 
-/* video belakang */
 
-.player-wrapper:fullscreen video {
 
-    width:100vw;
+.subtitle-controls button {
 
-    height:100vh;
 
-    object-fit:contain;
+    background:#222;
 
-    position:absolute;
+    color:white;
 
-    top:0;
+    border:none;
 
-    left:0;
+    padding:8px 12px;
 
-    z-index:1;
+    cursor:pointer;
+
 
 }
 
 
 
-/* subtitle di atas video */
-
-.player-wrapper:fullscreen #subtitleContainer {
-
-    position:absolute;
-
-    bottom:100px;
-
-    left:10%;
-
-    width:80%;
-
-    z-index:30;
-
-}
 
 
 
-/* kontrol di atas video */
 
-.player-wrapper:fullscreen .player-controls,
-.player-wrapper:fullscreen .controls,
-.player-wrapper:fullscreen .subtitle-controls {
-
-    position:relative;
-
-    z-index:40;
-
-    pointer-events:auto;
-
-}
-
-
-
-/* =====================
-STATUS
-===================== */
-
-
-.status-panel {
-
-    margin-top:15px;
-
-}
-
-
-
-/* =====================
-MOBILE
-===================== */
-
-
-@media(max-width:600px){
-
-
-    .app {
-
-        padding:15px 10px;
-
-    }
-
-
-    h1 {
-
-        font-size:24px;
-
-    }
-
-
-    #subtitleContainer {
-
-        font-size:20px;
-
-        bottom:50px;
-
-    }
-
-
-    .player-controls {
-
-        flex-wrap:wrap;
-
-    }
-
-
-    .player-controls button {
-
-        padding:6px 10px;
-
-    }
-
-}
 /* =========================
-   V3.4.1 FULLSCREEN SAFE
+   FULLSCREEN MODE
 ========================= */
 
 
 .player-wrapper:fullscreen {
 
+
     width:100vw;
 
     height:100vh;
 
     background:black;
 
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
 }
 
 
 
-/* video fullscreen */
+
 
 .player-wrapper:fullscreen video {
+
 
     width:100%;
 
@@ -327,130 +297,65 @@ MOBILE
 
     object-fit:contain;
 
+
 }
 
 
 
-/* subtitle tetap terlihat */
+
+
+
+
+/* subtitle fullscreen */
+
 
 .player-wrapper:fullscreen #subtitleContainer {
 
-    position:absolute;
 
-    bottom:80px;
+    bottom:100px;
 
-    left:10%;
+    z-index:100;
 
-    width:80%;
-
-    z-index:10;
 
 }
+
+
+
+
+
+
+
+
 /* =========================
-V3.4.1 FULLSCREEN CONTROL FIX
+   FULLSCREEN AUTO HIDE
 ========================= */
 
 
-/* Tombol speed */
 
-.player-wrapper:fullscreen .controls {
-
-    position:absolute;
-
-    bottom:90px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:100;
-
-}
-
-
-
-/* Tombol subtitle */
-
+.player-wrapper:fullscreen .player-controls,
+.player-wrapper:fullscreen .controls,
 .player-wrapper:fullscreen .subtitle-controls {
-
-    position:absolute;
-
-    bottom:40px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:100;
-
-}
-
-
-
-/* Kontrol utama video */
-
-.player-wrapper:fullscreen .player-controls {
-
-    position:absolute;
-
-    bottom:10px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:90%;
-
-    z-index:100;
-
-}
-
-
-
-/* Subtitle tetap di atas video */
-
-.player-wrapper:fullscreen #subtitleContainer {
-
-    bottom:150px;
-
-    z-index:90;
-
-}
-/* ==========================
-V3.4.2 AUTO HIDE CONTROL
-========================== */
-
-
-/* saat fullscreen aktif */
-
-.player-wrapper.fullscreen-mode
-.player-controls,
-.player-wrapper.fullscreen-mode
-.controls,
-.player-wrapper.fullscreen-mode
-.subtitle-controls {
 
 
     opacity:0;
 
     pointer-events:none;
 
-    transition:0.3s;
+    transition:opacity 0.3s;
 
 
 }
 
 
 
-/* ketika mouse disentuh / layar disentuh */
 
 
-.player-wrapper.fullscreen-mode:hover
-.player-controls,
-.player-wrapper.fullscreen-mode:hover
-.controls,
-.player-wrapper.fullscreen-mode:hover
-.subtitle-controls {
+/* tampil kembali saat disentuh */
+
+
+.player-wrapper:fullscreen:hover .player-controls,
+.player-wrapper:fullscreen:hover .controls,
+.player-wrapper:fullscreen:hover .subtitle-controls {
 
 
     opacity:1;
@@ -462,13 +367,57 @@ V3.4.2 AUTO HIDE CONTROL
 
 
 
-/* subtitle tetap hidup */
 
 
-.player-wrapper.fullscreen-mode
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:600px){
+
+
+
+h1 {
+
+    font-size:24px;
+
+}
+
+
+
 #subtitleContainer {
 
 
-    z-index:50;
+    font-size:20px;
+
+    bottom:50px;
+
+
+}
+
+
+
+.player-controls {
+
+
+    flex-wrap:wrap;
+
+
+}
+
+
+
+.player-controls button {
+
+
+    padding:6px 10px;
+
+
+}
+
 
 }
