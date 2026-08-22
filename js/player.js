@@ -1,6 +1,6 @@
 // ==========================
 // PRO VIDEO PLAYER
-// PLAYER.JS V3.4.6
+// PLAYER.JS V3.4.6 STABLE
 // ==========================
 
 
@@ -8,8 +8,13 @@ let video;
 let progressBar;
 let volumeControl;
 
-let controlTimer;
+let hideTimer;
 
+
+
+// ==========================
+// INITIALIZE
+// ==========================
 
 
 document.addEventListener(
@@ -62,7 +67,6 @@ async ()=>{
 
 
     }
-
     else{
 
 
@@ -76,6 +80,7 @@ async ()=>{
 
     window.subtitleEngine =
     subtitleEngine;
+
 
 
 
@@ -95,7 +100,10 @@ async ()=>{
 
 
 
-    // progress video
+    // ==========================
+    // PROGRESS BAR
+    // ==========================
+
 
     video.addEventListener(
     "timeupdate",
@@ -119,7 +127,6 @@ async ()=>{
 
 
 
-    // geser progress
 
     progressBar.addEventListener(
     "input",
@@ -144,7 +151,11 @@ async ()=>{
 
 
 
-    // volume
+
+    // ==========================
+    // VOLUME
+    // ==========================
+
 
     volumeControl.addEventListener(
     "input",
@@ -161,13 +172,9 @@ async ()=>{
             video.muted=false;
 
         }
-
-
         else{
 
-
             video.muted=true;
-
 
         }
 
@@ -176,8 +183,41 @@ async ()=>{
 
 
 
-
 });
+
+
+
+
+
+
+
+
+
+// ==========================
+// PLAY PAUSE
+// ==========================
+
+
+function togglePlay(){
+
+
+    if(video.paused){
+
+
+        video.play();
+
+
+    }
+    else{
+
+
+        video.pause();
+
+
+    }
+
+
+}
 
 
 
@@ -204,37 +244,6 @@ function changeSpeed(speed){
 
 
 
-// ==========================
-// PLAY PAUSE
-// ==========================
-
-
-function togglePlay(){
-
-
-    if(video.paused){
-
-
-        video.play();
-
-
-    }
-
-    else{
-
-
-        video.pause();
-
-
-    }
-
-
-}
-
-
-
-
-
 
 // ==========================
 // MUTE
@@ -255,6 +264,8 @@ function toggleMute(){
 
 
 
+
+
 // ==========================
 // SUBTITLE
 // ==========================
@@ -267,6 +278,8 @@ function toggleSubtitle(){
 
 
 }
+
+
 
 
 
@@ -355,21 +368,10 @@ function fullscreenVideo(){
     if(!document.fullscreenElement){
 
 
-        player.requestFullscreen()
-        .then(()=>{
-
-
-            player.classList.add(
-                "hide-control"
-            );
-
-
-        });
-
+        player.requestFullscreen();
 
 
     }
-
     else{
 
 
@@ -387,11 +389,10 @@ function fullscreenVideo(){
 
 
 
-// ==========================
-// FULLSCREEN CONTROL
-// YOUTUBE STYLE
-// ==========================
 
+// ==========================
+// FULLSCREEN AUTO HIDE
+// ==========================
 
 
 document.addEventListener(
@@ -409,30 +410,21 @@ document.addEventListener(
     if(document.fullscreenElement){
 
 
-
-        player.classList.add(
-            "hide-control"
-        );
+        hideControl();
 
 
 
-        player.addEventListener(
-            "click",
-            showFullscreenControls
-        );
+        player.onclick =
+        ()=>{
 
 
+            showControl();
 
-        player.addEventListener(
-            "touchstart",
-            showFullscreenControls
-        );
 
+        };
 
 
     }
-
-
     else{
 
 
@@ -458,9 +450,36 @@ document.addEventListener(
 
 
 
+function hideControl(){
 
-function showFullscreenControls(){
 
+    const player =
+    document.querySelector(
+        ".player-wrapper"
+    );
+
+
+
+    player.classList.add(
+        "hide-control"
+    );
+
+
+    player.classList.remove(
+        "show-control"
+    );
+
+
+}
+
+
+
+
+
+
+
+
+function showControl(){
 
 
     const player =
@@ -482,34 +501,23 @@ function showFullscreenControls(){
 
 
 
-
     clearTimeout(
-        controlTimer
+        hideTimer
     );
 
 
 
-
-    controlTimer =
+    hideTimer =
     setTimeout(
     ()=>{
 
 
-        player.classList.remove(
-            "show-control"
-        );
-
-
-        player.classList.add(
-            "hide-control"
-        );
-
+        hideControl();
 
 
     },
     3000
     );
-
 
 
 }
