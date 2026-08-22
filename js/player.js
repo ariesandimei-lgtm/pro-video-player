@@ -400,40 +400,23 @@ function subtitleDelay(value){
 
 function fullscreenVideo(){
 
-
     const player =
     document.querySelector(
         ".player-wrapper"
     );
 
 
-
-    player.classList.toggle(
-        "fullscreen-mode"
-    );
-
-
-
     if(!document.fullscreenElement){
 
 
+        player.requestFullscreen()
+        .then(()=>{
 
-        if(player.requestFullscreen){
+            player.classList.add(
+                "fullscreen-active"
+            );
 
-
-            player.requestFullscreen();
-
-
-        }
-
-        else if(player.webkitRequestFullscreen){
-
-
-            player.webkitRequestFullscreen();
-
-
-        }
-
+        });
 
 
     }
@@ -441,13 +424,14 @@ function fullscreenVideo(){
     else{
 
 
-        if(document.exitFullscreen){
+        document.exitFullscreen()
+        .then(()=>{
 
+            player.classList.remove(
+                "fullscreen-active"
+            );
 
-            document.exitFullscreen();
-
-
-        }
+        });
 
 
     }
